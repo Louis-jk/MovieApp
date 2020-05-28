@@ -64,7 +64,7 @@ function Search() {
             <div className="container-fluid px-lg-5">
                 <div className="d-flex justify-content-center">
                     <div className="search-form">
-                        <input type="text" name="search" value={query} onChange={handleSearch} placeholder="영화제목을 검색해보세요." />
+                        <input type="text" name="search" value={query} onChange={handleSearch} placeholder="영화제목을 검색해보세요." autocomplete="off" />
                         <label for="search" className="search-label">
                             <span className="content-name">Search</span>
                         </label>
