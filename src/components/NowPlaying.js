@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import axios from 'axios'
 import Loading from './Loading'
-import Regions from './options/Regions'
 import { useSelector, useDispatch } from 'react-redux'
-import { setMovies, setMoviesNow, setHashMore, setLikedMovies, setLiked, setUnLikedMovies } from '../modules/movieAPI'
-import { Link } from 'react-router-dom'
+import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import ScrollToTop from './ScrollToTop'
 import MovieList from './MovieListDefault'
 
@@ -31,11 +29,9 @@ function NowPlaying({language, region, category}) {
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
                 setPageNumber(prevPageNumber => prevPageNumber + 1)
-                console.log('Visible')
             }
         })
         if (node) observer.current.observe(node)
-        console.log(node)
     }, [loading, hasMore])
     
     

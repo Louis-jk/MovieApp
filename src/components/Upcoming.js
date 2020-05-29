@@ -30,11 +30,9 @@ function Upcoming({language, region, category}) {
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
                 setPageNumber(prevPageNumber => prevPageNumber + 1)
-                console.log('Visible')
             }
         })
         if (node) observer.current.observe(node)
-        console.log(node)
     }, [loading, hasMore])
 
     // const fetchMovie = async () => {

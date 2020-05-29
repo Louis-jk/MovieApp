@@ -1,6 +1,6 @@
 import React from 'react'
 import Nowplaying from '../components/NowPlaying'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Nav from '../layout/Nav'
 
 

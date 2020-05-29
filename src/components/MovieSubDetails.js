@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import ScrollToTop from './ScrollToTop'
 
 
-function MovieSubDetails ({ history, movie_id, api_key, url, imgPath, language, region, onChange}) {
+function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region }) {
 
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
@@ -29,7 +29,6 @@ function MovieSubDetails ({ history, movie_id, api_key, url, imgPath, language, 
             const videos = await Axios.get(`${url}/movie/${movie_id}/videos?api_key=${api_key}&language=${language}`)
             const trailer = videos.data.results 
             setTrailer(trailer)
-            console.log(trailer )
 
             const credit = await Axios.get(`${url}/movie/${movie_id}/credits?api_key=${api_key}`);
             const credits = credit.data
@@ -38,17 +37,21 @@ function MovieSubDetails ({ history, movie_id, api_key, url, imgPath, language, 
             const detail = await Axios.get(`${url}/movie/${movie_id}?api_key=${api_key}&language=${language}`)
             const details = detail.data
             setDetails(details)
-            console.log(details)  
 
         } catch(err) {
             setError(true)
         }
+
         setLoading(false)
     }
 
     useEffect(() => {
         movieDetail()
-    }, [])
+        return () => {
+            movieDetail()
+        }
+    }, [setTrailer, setCredits, setDetails, setLoading, setError])
+
 
     if (loading) return <Loading />
     if (error) return <div>에러 발생</div>
@@ -72,18 +75,15 @@ function MovieSubDetails ({ history, movie_id, api_key, url, imgPath, language, 
 
     const moreBtn01 = (e) => {
         actorVisible <= 8 ? setActorVisible(e.length) : setActorVisible(8)
-        console.log(e.length)
         setBtnMsg01(!btnMsg01)
     }
 
     const moreBtn02 = (e) => {
         crewVisible <= 8 ? setCrewVisible(e.length) : setCrewVisible(8)
-        console.log(e.length)
         setBtnMsg02(!btnMsg02)
     }
              
-            
-    console.log(trailer)
+        
     return (
         <div className="container-fluid">
             <div className="mt-5">
@@ -92,7 +92,7 @@ function MovieSubDetails ({ history, movie_id, api_key, url, imgPath, language, 
             <div style={backgroundImage}></div>
             <div className="row px-md-5 py-md-5">
                 <div className="col-md-4 col-xl-3">
-                     <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded"/>                    
+                     <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded" title={details.title} alt={details.title}/>                    
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details">
                     <h3 className="display-4">{details.title}</h3>
@@ -122,37 +122,37 @@ function MovieSubDetails ({ history, movie_id, api_key, url, imgPath, language, 
                 <div className="col-md-12 row mt-5">
                     <div className="col-lg-6">
                         <h5>출연배우</h5>   
-                        { credits.cast.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn01}>{!btnMsg01 ? '더보기' : '닫기'}</button> : null}
+                        { credits.cast.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn01}>{!btnMsg01 ? '더보기' : '닫기'}</button> : null }
                             {              
                                 credits.cast.length === 0 ? <p className="row col-12 my-3">배우 정보가 없습니다.</p> :
                                 <ul>
                                     {   
-                                        credits.cast.map(actor => <li key={actor.id} className='creditsList'><a href={"/person/"+actor.id}>
-                                        <Link to={`/person/${actor.id}`}><img src={actor.profile_path? `${imgPath}/w300${actor.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" id={actor.id} /></Link>
+                                        credits.cast.map(actor => <li key={actor.id} className='creditsList'><a href={`person/${actor.id}`}>
+                                        <Link to={`/person/${actor.id}`}><img src={actor.profile_path? `${imgPath}/w300${actor.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" id={actor.id} title={actor.name} alt={actor.name} /></Link>
                                         <h6>역할명<br />{ actor.character ? actor.character : "-" }</h6><h6>배우명<br />{ actor.name ? actor.name : "정보없음" }</h6></a>
-                                        </li>).slice(0,actorVisible)
+                                        </li>).slice(0, actorVisible)
                                     }     
                                 </ul>
                             }                 
                     </div>
                     <div className="col-lg-6">
                         <h5>제작진</h5>
-                        { credits.crew.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn02}>{!btnMsg02 ? '더보기' : '닫기'}</button> : null}                        
-                            {credits.crew.length === 0 ? <p className="row col-12 my-3">제작진 정보가 없습니다.</p> :                                
+                        { credits.crew.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn02}>{!btnMsg02 ? '더보기' : '닫기'}</button> : null }
+                            { credits.crew.length === 0 ? <p className="row col-12 my-3">제작진 정보가 없습니다.</p> :                                
                                 <ul>                                    
                                     { 
-                                        credits.crew.map(staff => <li key={staff.id} className='creditsList'><a href={"/person/"+staff.id}>
-                                        <img src={staff.profile_path? `${imgPath}/w300${staff.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" />
+                                        credits.crew.map(staff => <li key={staff.id} className='creditsList'><a href={`person/${staff.id}`}>
+                                        <img src={staff.profile_path? `${imgPath}/w300${staff.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" title={staff.name} alt={staff.name}/>
                                         <h6>포지션<br />{ staff.job ? staff.job : "-" }</h6><h6>이름<br />{ staff.name ? staff.name : "정보없음" }</h6></a>
-                                        </li>).slice(0,crewVisible)
+                                        </li>).slice(0, crewVisible)
                                     }
                                 </ul>
                             }                           
                     </div>
                 </div>
 
-                <Recommend movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} onChange={onChange}/>
-                <Similar movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} onChange={onChange}/>
+                <Recommend movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} />
+                <Similar movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} />
             </div>
             <ScrollToTop />
         </div>

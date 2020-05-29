@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Loading from './Loading'
 import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
-import MovieList from './MovieListDefault'
+import MovieList from './MovieListOpen'
 
 
 const api_key = process.env.REACT_APP_ACCESSKEY
@@ -76,10 +76,10 @@ function Search() {
                     movies.map((movie, index) => 
                         (movies.length === index + 1) ?
                         <div ref={lastMovieElementRef} key={movie.id}>
-                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />
                         </div> :
                         <div key={movie.id}>
-                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />
                         </div>
                         )}
                 </div>

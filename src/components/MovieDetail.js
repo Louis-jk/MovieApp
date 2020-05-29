@@ -5,14 +5,9 @@ import Axios from 'axios'
 import Recommend from './Recommend'
 import Similar from './Similar'
 import { Link } from 'react-router-dom'
-import ScrollToTop from './ScrollToTop'
-import { setLikedMovies, setLiked } from '../modules/movieAPI'
-import { useDispatch } from 'react-redux'
 
 
 function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, region, onChange }) {  
-
-    const dispatch = useDispatch()
 
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
@@ -50,7 +45,10 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
 
     useEffect(() => {
         movieDetail()
-    }, [])
+        return () => {
+            movieDetail()
+        }
+    }, [url, movie_id, api_key, language])
 
     if (loading) return <Loading />
     if (error) return <div>에러 발생</div>
@@ -83,14 +81,6 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
         console.log(e.length)
         setBtnMsg02(!btnMsg02)
     }
-
-    const onSetLike = (e) => {       
-        const data = JSON.parse(e.target.value)
-        dispatch(setLikedMovies(data))
-        
-
-        // setLikes([data].concat(likes))
-    }
              
         
     return (
@@ -101,7 +91,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
             <div style={backgroundImage}></div>
             <div className="row px-md-5 py-md-5">
                 <div className="col-md-4 col-xl-3">
-                     <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded"/>                    
+                    <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded" title={details.title} alt={details.title}/>                    
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details">
                     <h3 className="display-4">{details.title}</h3>
@@ -136,9 +126,11 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                                 credits.cast.length === 0 ? <p className="row col-12 my-3">배우 정보가 없습니다.</p> :
                                 <ul>
                                     {   
-                                        credits.cast.map(actor => <li key={actor.id} className='creditsList'><a href={"/person/"+actor.id}>
-                                        <Link to={`/person/${actor.id}`}><img src={actor.profile_path? `${imgPath}/w300${actor.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" id={actor.id} /></Link>
-                                        <h6>역할명<br />{ actor.character ? actor.character : "-" }</h6><h6>배우명<br />{ actor.name ? actor.name : "정보없음" }</h6></a>
+                                        credits.cast.map((actor,idx) => <li key={idx} className='creditsList'>
+                                        <Link to={`/person/${actor.id}`}>
+                                            <img src={actor.profile_path? `${imgPath}/w300${actor.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" title={actor.name} alt={actor.name} />
+                                            <h6>역할명<br />{ actor.character ? actor.character : "-" }</h6><h6>배우명<br />{ actor.name ? actor.name : "정보없음" }</h6>
+                                        </Link>
                                         </li>).slice(0,actorVisible)
                                     }     
                                 </ul>
@@ -150,9 +142,11 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                             {credits.crew.length === 0 ? <p className="row col-12 my-3">제작진 정보가 없습니다.</p> :                                
                                 <ul>                                    
                                     { 
-                                        credits.crew.map(staff => <li key={staff.id} className='creditsList'><a href={"/person/"+staff.id}>
-                                        <img src={staff.profile_path? `${imgPath}/w300${staff.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" />
-                                        <h6>포지션<br />{ staff.job ? staff.job : "-" }</h6><h6>이름<br />{ staff.name ? staff.name : "정보없음" }</h6></a>
+                                        credits.crew.map((staff,idx) => <li key={idx} className='creditsList'>
+                                        <Link to={`/person/${staff.id}`}>
+                                            <img src={staff.profile_path? `${imgPath}/w300${staff.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" title={staff.name} alt={staff.name} />                                        
+                                            <h6>포지션<br />{ staff.job ? staff.job : "-" }</h6><h6>이름<br />{ staff.name ? staff.name : "정보없음" }</h6>
+                                        </Link>
                                         </li>).slice(0,crewVisible)
                                     }
                                 </ul>
@@ -160,10 +154,9 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                     </div>
                 </div>
 
-                <Recommend movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} onChange={onChange}/>
-                <Similar movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} onChange={onChange}/>
-            </div>
-            <ScrollToTop />
+                <Recommend movie_id={movie_id} url={url} api_key={api_key} language={language} region={region} imgPath={imgPath} />
+                <Similar movie_id={movie_id} url={url} api_key={api_key} language={language} region={region} imgPath={imgPath} />
+            </div>            
         </div>
     )
 }

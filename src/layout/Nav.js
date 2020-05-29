@@ -19,7 +19,7 @@ function Nav({category, language, region, page}) {
         }).catch( e => {
             console.log(e)
         })
-    },)
+    },[])
 
     return (
         <>
@@ -52,17 +52,6 @@ function Nav({category, language, region, page}) {
                     activeClassName='nav-menu'><em>찜한영화</em></NavLink>
                 </li>
                 </ul>
-                
-                {/* <div className="dropdown ml-3">
-                    <div className="dropdown-menu-right input-group">
-                    <select className="custom-select" id="inputGroupSelect01" onChange={onChange}>
-                        <option value="">언어선택</option>
-                        <option value="ko-KR">한국어</option>
-                        <option value="ja-JP">日本語</option>
-                        <option value="en-US">English</option>
-                    </select>
-                    </div>
-                </div> */}
             </div>
         </nav>
         </>
