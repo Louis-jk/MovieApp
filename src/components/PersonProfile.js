@@ -54,7 +54,7 @@ function PersonProfile({history, match}) {
 
     useEffect(() => {
         fetchmovies()
-    }, [])
+    }, [url, personId, api_key, language])
 
  
     if (loading) return <Loading />

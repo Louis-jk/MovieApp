@@ -34,30 +34,6 @@ function Upcoming({language, region, category}) {
         if (node) observer.current.observe(node)
     }, [loading, hasMore])
 
-    // const fetchMovie = async () => {
-
-    //     let cancel
-
-    //     await axios({
-
-    //         method: 'GET',
-    //         url: `${url}/movie/upcoming?api_key=${api_key}&language=${language}&page=${pageNumber}&region=${region}`,
-    //         cancelToken: new axios.CancelToken(c => cancel = c)
-
-    //     }).then(res => {
-    //         setMovies(prevMovies => {
-    //             return [...new Set([...prevMovies, ...res.data.results])]
-    //         })
-    //         setHasMore(res.data.results.length > 0)
-    //         setLoading(false)
-
-    //     }).catch(e => {
-    //         if (axios.isCancel(e)) return
-    //         setError(true)
-    //     })
-        
-    //     return () => cancel()
-    // }
    
     useEffect(() => {       
         
@@ -104,8 +80,6 @@ function Upcoming({language, region, category}) {
         <div className="container-fluid px-lg-5">
             
             <h5 className="mt-5 border-left pl-3 mb-2">개봉 예정영화</h5>
-
-            {/* <Regions category={category} language={language} region={region} onChange={onChange} /> */}
 
             <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">                
                 {                
