@@ -48,8 +48,8 @@ function Similar({movie_id, url, api_key, language, region, imgPath}) {
     }
 
     if (loading) return <Loading />
-    if (error) return <div>에러 발생</div>
-    if (!movies) return <div><h3>비슷한 장르의 영화가 없습니다.</h3></div>
+    if (error) return <div className="col-12 mb-5">에러 발생</div>
+    if (!movies) return <div className="col-12 mb-5"><h3>비슷한 장르의 영화가 없습니다.</h3></div>
 
     return (
         <div className="mt-5 col-12">

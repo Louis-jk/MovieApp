@@ -4,6 +4,10 @@ function ScrollToTop() {
 
     const [scroll, setScroll] = useState()
 
+    const onScrollToUp = () => {
+        window.scrollTo({top:0, left:0, behavior:'smooth'})
+    }
+
     useEffect(() => {
         setScroll(false)
         window.addEventListener('scroll', () => {
@@ -14,11 +18,9 @@ function ScrollToTop() {
                 setScroll(false)
             }
         })
+        return () => setScroll(false)
     }, [setScroll])    
 
-    const onScrollToUp = () => {
-        window.scrollTo({top:0, left:0, behavior:'smooth'})
-    }
 
     return <div className={scroll ? 'toTop active' : 'toTop'} onClick={onScrollToUp}><i className="arrow up"></i></div>
 }

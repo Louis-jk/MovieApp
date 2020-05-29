@@ -44,10 +44,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     }
 
     useEffect(() => {
-        movieDetail()
-        return () => {
-            movieDetail()
-        }
+        movieDetail()       
     }, [url, movie_id, api_key, language])
 
     if (loading) return <Loading />
@@ -71,14 +68,12 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     }
 
     const moreBtn01 = (e) => {
-        actorVisible <= 8 ? setActorVisible(e.length) : setActorVisible(8)
-        console.log(e.length)
+        actorVisible <= 8 ? setActorVisible(e.length) : setActorVisible(8)        
         setBtnMsg01(!btnMsg01)
     }
 
     const moreBtn02 = (e) => {
-        crewVisible <= 8 ? setCrewVisible(e.length) : setCrewVisible(8)
-        console.log(e.length)
+        crewVisible <= 8 ? setCrewVisible(e.length) : setCrewVisible(8)        
         setBtnMsg02(!btnMsg02)
     }
              
@@ -88,7 +83,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
             <div className="mt-5">
                 <a href="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</a>
             </div>
-            <div style={backgroundImage}></div>
+            <div style={ backgroundImage }></div>
             <div className="row px-md-5 py-md-5">
                 <div className="col-md-4 col-xl-3">
                     <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded" title={details.title} alt={details.title}/>                    

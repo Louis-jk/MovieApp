@@ -7,7 +7,7 @@ import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import MovieList from './MovieListOpen'
 
-
+const url = process.env.REACT_APP_BASEURL
 const api_key = process.env.REACT_APP_ACCESSKEY
 const imgPath = process.env.REACT_APP_BASEIMGPATH
 
@@ -22,7 +22,7 @@ function Search() {
     const [query, setQuery] = useState('')
     const [pageNumber, setPageNumber] = useState(1)
 
-    const { movies, hasMore, loading, error } = useMovieSearch(api_key, query, language, pageNumber)
+    const { movies, hasMore, loading, error } = useMovieSearch(url,api_key, query, language, pageNumber)
 
     const observer = useRef()
     const lastMovieElementRef = useCallback( node => {
@@ -35,7 +35,6 @@ function Search() {
             }
         })
         if (node) observer.current.observe(node)
-        console.log(node)
     }, [loading, hasMore])
 
     function handleSearch(e) {   
@@ -64,8 +63,8 @@ function Search() {
             <div className="container-fluid px-lg-5">
                 <div className="d-flex justify-content-center">
                     <div className="search-form">
-                        <input type="text" name="search" value={query} onChange={handleSearch} placeholder="영화제목을 검색해보세요." autocomplete="off" />
-                        <label for="search" className="search-label">
+                        <input type="text" name="search" value={query} onChange={handleSearch} placeholder="영화제목을 검색해보세요." autoComplete="off" />
+                        <label htmlFor="search" className="search-label">
                             <span className="content-name">Search</span>
                         </label>
                     </div>
@@ -85,9 +84,9 @@ function Search() {
                 </div>
                 
                 { loading ? <Loading /> : null }
-                <div>{error && 'Error'}</div>     
-                <ScrollToTop />
-            </div>           
+                <div>{error && 'Error'}</div>                     
+            </div>
+            <ScrollToTop />
         </>
     )
 }

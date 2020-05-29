@@ -67,7 +67,7 @@ function Popular({language, region, category}) {
             if (axios.isCancel(e)) return
             setError(true)
         })
-        return () => cancel()        
+        return () => cancel()
         
     }, [url, api_key, language, region, pageNumber])
 

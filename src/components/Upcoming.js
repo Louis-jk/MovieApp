@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import axios from 'axios'
 import Loading from './Loading'
 import { useDispatch, useSelector } from 'react-redux'
-import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import MovieList from './MovieListDefault'
 
@@ -122,8 +121,7 @@ function Upcoming({language, region, category}) {
                     )}
             </div>
             <div>{loading && <Loading />}</div>
-            <div>{error && 'Error'}</div>
-            <ScrollToTop />
+            <div>{error && 'Error'}</div>            
         </div>
     )
 }

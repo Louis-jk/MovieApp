@@ -3,7 +3,6 @@ import axios from 'axios'
 import Loading from './Loading'
 import { useSelector, useDispatch } from 'react-redux'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
-import ScrollToTop from './ScrollToTop'
 import MovieList from './MovieListDefault'
 
 const api_key = process.env.REACT_APP_ACCESSKEY
@@ -99,8 +98,7 @@ function NowPlaying({language, region, category}) {
                     )}
             </div>
             <div>{loading && <Loading />}</div>
-            <div>{error && 'Error'}</div>
-            <ScrollToTop />
+            <div>{error && 'Error'}</div>            
         </div>
     )
 }

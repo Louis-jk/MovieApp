@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-export default function useMovieSearch(api_key, query, language, pageNumber) {
+export default function useMovieSearch(url, api_key, query, language, pageNumber) {
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
@@ -19,11 +19,10 @@ export default function useMovieSearch(api_key, query, language, pageNumber) {
             
             axios({
                 method: 'GET',
-                url: `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&language=${language}&query=${query}&page=${pageNumber}`,
+                url: `${url}/search/movie?api_key=${api_key}&language=${language}&query=${query}&page=${pageNumber}`,
                 cancelToken: new axios.CancelToken(c => cancel = c)
     
-            }).then(res => {            
-                console.log(res.data)
+            }).then(res => {       
                 setMovies(prevMovies => {
                     return [...new Set([...prevMovies, ...res.data.results])]
                 })                
@@ -31,9 +30,10 @@ export default function useMovieSearch(api_key, query, language, pageNumber) {
                 setLoading(false)    
             }).catch(e => {
                 if (axios.isCancel(e)) return
+                setError(true)
             })
             return () => cancel()
-        },[api_key, language, query, pageNumber])
+        },[url, api_key, language, query, pageNumber])
 
     return { loading, error, movies, hasMore }
 }

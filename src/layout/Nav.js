@@ -19,7 +19,7 @@ function Nav({category, language, region, page}) {
         }).catch( e => {
             console.log(e)
         })
-    },[])
+    },[dispatch, language])
 
     return (
         <>

@@ -2,6 +2,7 @@ import React from 'react'
 import Nowplaying from '../components/NowPlaying'
 import { useSelector } from 'react-redux'
 import Nav from '../layout/Nav'
+import ScrollToTop from '../components/ScrollToTop'
 
 
 function NowPlayingContainer() {
@@ -13,6 +14,7 @@ function NowPlayingContainer() {
         <>
             <Nav language={language} category={category} region={region} />
             <Nowplaying category={category} language={language} region={region} />
+            <ScrollToTop />
         </>
     )
 }

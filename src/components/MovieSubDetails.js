@@ -5,7 +5,6 @@ import Axios from 'axios'
 import Recommend from './Recommend'
 import Similar from './Similar'
 import { Link } from 'react-router-dom'
-import ScrollToTop from './ScrollToTop'
 
 
 function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region }) {
@@ -19,6 +18,7 @@ function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region })
     const [ crewVisible, setCrewVisible ] = useState(8)
     const [ btnMsg01, setBtnMsg01 ] = useState(false)
     const [ btnMsg02, setBtnMsg02 ] = useState(false)
+    
 
     const movieDetail = async () => {
         
@@ -50,13 +50,13 @@ function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region })
         return () => {
             movieDetail()
         }
-    }, [setTrailer, setCredits, setDetails, setLoading, setError])
+    }, [url, movie_id, api_key, language])
 
 
     if (loading) return <Loading />
     if (error) return <div>에러 발생</div>
     if (!credits) return null    
-    if (!details) return null    
+    if (!details) return null
 
 
     const backgroundImage = {
@@ -82,12 +82,12 @@ function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region })
         crewVisible <= 8 ? setCrewVisible(e.length) : setCrewVisible(8)
         setBtnMsg02(!btnMsg02)
     }
-             
+    
         
     return (
         <div className="container-fluid">
             <div className="mt-5">
-                <a href="#" onClick={window.self.close} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-times" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>닫기</a>
+                <a href="/" onClick={window.self.close} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-times" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>닫기</a>
             </div>
             <div style={backgroundImage}></div>
             <div className="row px-md-5 py-md-5">
@@ -122,39 +122,42 @@ function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region })
                 <div className="col-md-12 row mt-5">
                     <div className="col-lg-6">
                         <h5>출연배우</h5>   
-                        { credits.cast.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn01}>{!btnMsg01 ? '더보기' : '닫기'}</button> : null }
+                        { credits.cast.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn01}>{!btnMsg01 ? '더보기' : '닫기'}</button> : null}
                             {              
                                 credits.cast.length === 0 ? <p className="row col-12 my-3">배우 정보가 없습니다.</p> :
                                 <ul>
                                     {   
-                                        credits.cast.map(actor => <li key={actor.id} className='creditsList'><a href={`person/${actor.id}`}>
-                                        <Link to={`/person/${actor.id}`}><img src={actor.profile_path? `${imgPath}/w300${actor.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" id={actor.id} title={actor.name} alt={actor.name} /></Link>
-                                        <h6>역할명<br />{ actor.character ? actor.character : "-" }</h6><h6>배우명<br />{ actor.name ? actor.name : "정보없음" }</h6></a>
-                                        </li>).slice(0, actorVisible)
+                                        credits.cast.map((actor,idx) => <li key={idx} className='creditsList'>
+                                        <Link to={`/person/${actor.id}`}>
+                                            <img src={actor.profile_path? `${imgPath}/w300${actor.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" title={actor.name} alt={actor.name} />
+                                            <h6>역할명<br />{ actor.character ? actor.character : "-" }</h6><h6>배우명<br />{ actor.name ? actor.name : "정보없음" }</h6>
+                                        </Link>
+                                        </li>).slice(0,actorVisible)
                                     }     
                                 </ul>
                             }                 
                     </div>
                     <div className="col-lg-6">
                         <h5>제작진</h5>
-                        { credits.crew.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn02}>{!btnMsg02 ? '더보기' : '닫기'}</button> : null }
-                            { credits.crew.length === 0 ? <p className="row col-12 my-3">제작진 정보가 없습니다.</p> :                                
+                        { credits.crew.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn02}>{!btnMsg02 ? '더보기' : '닫기'}</button> : null}                        
+                            {credits.crew.length === 0 ? <p className="row col-12 my-3">제작진 정보가 없습니다.</p> :                                
                                 <ul>                                    
                                     { 
-                                        credits.crew.map(staff => <li key={staff.id} className='creditsList'><a href={`person/${staff.id}`}>
-                                        <img src={staff.profile_path? `${imgPath}/w300${staff.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" title={staff.name} alt={staff.name}/>
-                                        <h6>포지션<br />{ staff.job ? staff.job : "-" }</h6><h6>이름<br />{ staff.name ? staff.name : "정보없음" }</h6></a>
-                                        </li>).slice(0, crewVisible)
+                                        credits.crew.map((staff,idx) => <li key={idx} className='creditsList'>
+                                        <Link to={`/person/${staff.id}`}>
+                                            <img src={staff.profile_path? `${imgPath}/w300${staff.profile_path}` : "../noimg.jpg"} className="img-fluid rounded" title={staff.name} alt={staff.name} />                                        
+                                            <h6>포지션<br />{ staff.job ? staff.job : "-" }</h6><h6>이름<br />{ staff.name ? staff.name : "정보없음" }</h6>
+                                        </Link>
+                                        </li>).slice(0,crewVisible)
                                     }
                                 </ul>
                             }                           
                     </div>
                 </div>
 
-                <Recommend movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} />
-                <Similar movie_id={movie_id} api_key={api_key} language={language} region={region} imgPath={imgPath} />
+                <Recommend movie_id={movie_id} url={url} api_key={api_key} language={language} region={region} imgPath={imgPath} />
+                <Similar movie_id={movie_id} url={url} api_key={api_key} language={language} region={region} imgPath={imgPath} />
             </div>
-            <ScrollToTop />
         </div>
     )
 }

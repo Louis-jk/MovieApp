@@ -7,6 +7,9 @@ import Nav from '../layout/Nav'
 import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 
+const api_key = process.env.REACT_APP_ACCESSKEY
+const url = process.env.REACT_APP_BASEURL
+const imgPath = process.env.REACT_APP_BASEIMGPATH
 
 function PersonProfile({history, match}) {
 
@@ -27,19 +30,19 @@ function PersonProfile({history, match}) {
     const fetchmovies = async () => {
         try {
             setLoading(true)
-            const response = await Axios.get(`https://api.themoviedb.org/3/person/${personId}?api_key=87643d59a8168f20b93f1246575a8f8e&language=${language}`)
+            const response = await Axios.get(`${url}/person/${personId}?api_key=${api_key}&language=${language}`)
             const person = response.data
             setPerson(person)
            
-            const personCastRes = await Axios.get(`https://api.themoviedb.org/3/person/${personId}/movie_credits?api_key=87643d59a8168f20b93f1246575a8f8e&language=${language}`)
+            const personCastRes = await Axios.get(`${url}/person/${personId}/movie_credits?api_key=${api_key}&language=${language}`)
             const castMovies = personCastRes.data.cast
             setCastMovies(castMovies)
 
-            const personCrewRes = await Axios.get(`https://api.themoviedb.org/3/person/${personId}/movie_credits?api_key=87643d59a8168f20b93f1246575a8f8e&language=${language}`)
+            const personCrewRes = await Axios.get(`${url}/person/${personId}/movie_credits?api_key=${api_key}&language=${language}`)
             const crewMovies = personCrewRes.data.crew
             setCrewMovies(crewMovies)
 
-            const personImage = await Axios.get(`https://api.themoviedb.org/3/person/${personId}/images?api_key=87643d59a8168f20b93f1246575a8f8e`)
+            const personImage = await Axios.get(`${url}/person/${personId}/images?api_key=${api_key}`)
             const images = personImage.data.profiles
             setImages(images)
             
@@ -51,7 +54,7 @@ function PersonProfile({history, match}) {
 
     useEffect(() => {
         fetchmovies()
-    }, [personId, language])
+    }, [])
 
  
     if (loading) return <Loading />
@@ -73,59 +76,6 @@ function PersonProfile({history, match}) {
         }
     }
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        slidesToShow: 10,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
-        pauseOnHover: true,
-        cssEase: "linear",
-        responsive: [
-            {
-                breakpoint: 2024,
-                settings: {
-                  slidesToShow: 7,
-                  slidesToScroll: 3,
-                  dots: true,
-                }
-              },
-            {
-                breakpoint: 1226,
-                settings: {
-                  slidesToShow: 5,
-                  slidesToScroll: 3,
-                  dots: true,
-                }
-              },
-            {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 4,
-                dots: true,
-              }
-            },
-            {
-              breakpoint: 600,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-              }
-            },
-            {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-              }
-            }
-          ]
-      }
-
     return (
         <>
         <Nav />
@@ -136,7 +86,7 @@ function PersonProfile({history, match}) {
 
             <div className="row px-md-5 py-md-5">
                 <div className="col-md-4 col-xl-3 ">
-                    <img src={ person.profile_path ? "https://image.tmdb.org/t/p/w500"+ person.profile_path : "../noimg.jpg" } title={person.name} alt={person.name} />
+                    <img src={ person.profile_path ? `${imgPath}/w500${person.profile_path}` : "../noimg.jpg" } title={person.name} alt={person.name} />
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details">
                     <h3 className="display-4 mb-5">{ person.name ? person.name : "정보가 없습니다."}</h3>
@@ -165,7 +115,7 @@ function PersonProfile({history, match}) {
                 <div className="col-12 my-5">       
                     <h3 className="col-12 mt-5">갤러리</h3>
                         {                            
-                            images.map((img,index) => <div key={index}><img src={"https://image.tmdb.org/t/p/w185" + img.file_path} alt={img.file_path} /></div>)
+                            images.map((img,index) => <div key={index}><img src={`${imgPath}/w185${img.file_path}`} alt={img.file_path} /></div>)
                         }
                 </div>
 
@@ -176,7 +126,7 @@ function PersonProfile({history, match}) {
                         {   castMovies.length === 0 ? <p className="block mx-3">출연한 영화가 없습니다.</p> :
                             castMovies.map(movie => <div key={movie.id}>                    
                             <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                                <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"} title={movie.title} alt={movie.title} />
+                                <img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w500${movie.poster_path}` : "../noimg.jpg" } title={movie.title} alt={movie.title} />
                                 <div className="card-body px-0 px-md-1">
                                     <h5 className="card-title">{movie.title}</h5>
                                     <p className="card-text">평점 : {movie.vote_average}</p>
@@ -199,31 +149,31 @@ function PersonProfile({history, match}) {
                     
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
                         {   crewMovies.length === 0 ? <p className="block mx-3">제작에 참여한 영화가 없습니다.</p> :
-                            crewMovies.map(movie => <div key={movie.id}>                    
-                            <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                                <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"} title={movie.title} alt={movie.title} />
-                                <div className="card-body px-0 px-md-1">
-                                    <h5 className="card-title">{movie.title}</h5>
-                                    <p className="card-text">평점 : {movie.vote_average}</p>
-                                    <p>장르 : {movie.genre_ids.map(genreId => genreId+',')}</p>                            
-                                    <p>개봉일자 : {movie.release_date}</p>
-                                    <button className="btn border-light float-right" value={movie.id} onClick={onClick}>자세히 보기</button>
-                                    {likedMovies.find(e => e.id === movie.id) ?
-                                        <button className="btn border-light float-right liked done" value={JSON.stringify(movie)} onClick={onSetLike}>찜취소</button>
-                                        :
-                                        <button className="btn border-light float-right liked" value={JSON.stringify(movie)} onClick={onSetLike}>찜하기</button>
-                                    }
+                            crewMovies.map(movie => 
+                            <div key={movie.id}>                    
+                                <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
+                                    <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"} title={movie.title} alt={movie.title} />
+                                    <div className="card-body px-0 px-md-1">
+                                        <h5 className="card-title">{movie.title}</h5>
+                                        <p className="card-text">평점 : {movie.vote_average}</p>
+                                        <p>장르 : {movie.genre_ids.map(genreId => genreId+',')}</p>                            
+                                        <p>개봉일자 : {movie.release_date}</p>
+                                        <button className="btn border-light float-right" value={movie.id} onClick={onClick}>자세히 보기</button>
+                                        {likedMovies.find(e => e.id === movie.id) ?
+                                            <button className="btn border-light float-right liked done" value={JSON.stringify(movie)} onClick={onSetLike}>찜취소</button>
+                                            :
+                                            <button className="btn border-light float-right liked" value={JSON.stringify(movie)} onClick={onSetLike}>찜하기</button>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
                             </div>)}
+                        </div>
                     </div>
-                </div>
-
+                </div>            
             </div>
             <ScrollToTop />
-        </div>
-        </>
-    )
-}
+            </>
+        )
+    }
 
 export default PersonProfile
