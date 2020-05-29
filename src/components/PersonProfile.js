@@ -3,11 +3,9 @@ import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import Loading from './Loading'
 import '../App.css'
-import Slider from 'react-slick'
-import Carousel from 'nuka-carousel'
 import Nav from '../layout/Nav'
 import ScrollToTop from './ScrollToTop'
-import { setLikedMovies, setLiked, setUnLikedMovies } from '../modules/movieAPI'
+import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 
 
 function PersonProfile({history, match}) {
@@ -32,26 +30,18 @@ function PersonProfile({history, match}) {
             const response = await Axios.get(`https://api.themoviedb.org/3/person/${personId}?api_key=87643d59a8168f20b93f1246575a8f8e&language=${language}`)
             const person = response.data
             setPerson(person)
-            console.log("person : ")
-            console.log(person)
            
             const personCastRes = await Axios.get(`https://api.themoviedb.org/3/person/${personId}/movie_credits?api_key=87643d59a8168f20b93f1246575a8f8e&language=${language}`)
             const castMovies = personCastRes.data.cast
             setCastMovies(castMovies)
-            console.log("castMovies : ")
-            console.log(castMovies)
 
             const personCrewRes = await Axios.get(`https://api.themoviedb.org/3/person/${personId}/movie_credits?api_key=87643d59a8168f20b93f1246575a8f8e&language=${language}`)
             const crewMovies = personCrewRes.data.crew
             setCrewMovies(crewMovies)
-            console.log("crewMovies : ")
-            console.log(crewMovies)
 
             const personImage = await Axios.get(`https://api.themoviedb.org/3/person/${personId}/images?api_key=87643d59a8168f20b93f1246575a8f8e`)
             const images = personImage.data.profiles
             setImages(images)
-            console.log("images: ")
-            console.log(images)
             
         } catch(err) {
             setError(err)
@@ -60,8 +50,8 @@ function PersonProfile({history, match}) {
     }
 
     useEffect(() => {
-        fetchmovies();
-    }, [])
+        fetchmovies()
+    }, [personId, language])
 
  
     if (loading) return <Loading />
@@ -174,13 +164,9 @@ function PersonProfile({history, match}) {
 
                 <div className="col-12 my-5">       
                     <h3 className="col-12 mt-5">갤러리</h3>
-                    <Slider {...settings}>
-                    {/* <Carousel dragging={true} edgeEasing="easeOutCirc" slidesToShow={10} slidesToScroll={3} cellSpacing={20}> */}
-                        {
+                        {                            
                             images.map((img,index) => <div key={index}><img src={"https://image.tmdb.org/t/p/w185" + img.file_path} alt={img.file_path} /></div>)
                         }
-                    {/* </Carousel> */}
-                    </Slider>
                 </div>
 
                 <div className="mt-5 col-12">
@@ -190,7 +176,7 @@ function PersonProfile({history, match}) {
                         {   castMovies.length === 0 ? <p className="block mx-3">출연한 영화가 없습니다.</p> :
                             castMovies.map(movie => <div key={movie.id}>                    
                             <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                                <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"}/>
+                                <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"} title={movie.title} alt={movie.title} />
                                 <div className="card-body px-0 px-md-1">
                                     <h5 className="card-title">{movie.title}</h5>
                                     <p className="card-text">평점 : {movie.vote_average}</p>
@@ -215,7 +201,7 @@ function PersonProfile({history, match}) {
                         {   crewMovies.length === 0 ? <p className="block mx-3">제작에 참여한 영화가 없습니다.</p> :
                             crewMovies.map(movie => <div key={movie.id}>                    
                             <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                                <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"}/>
+                                <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"} title={movie.title} alt={movie.title} />
                                 <div className="card-body px-0 px-md-1">
                                     <h5 className="card-title">{movie.title}</h5>
                                     <p className="card-text">평점 : {movie.vote_average}</p>

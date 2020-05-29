@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
 const api_key = process.env.REACT_APP_ACCESSKEY
@@ -7,7 +7,7 @@ const url = process.env.REACT_APP_BASEURL
 
 function Regions({language, region, category, page}) {
 
-    const state = useSelector(state => state.movieAPI)
+    // const state = useSelector(state => state.movieAPI)
     const dispatch = useDispatch()
 
 

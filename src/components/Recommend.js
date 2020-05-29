@@ -6,7 +6,7 @@ import { setLikedMovies, setUnLikedMovies,  } from '../modules/movieAPI'
 import MovieList from './MovieListOpen'
 
 
-function Recommend({movie_id, api_key, language, region, imgPath}) {
+function Recommend({movie_id, url, api_key, language, region, imgPath}) {
 
     const [movies, setMovies] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -28,7 +28,7 @@ function Recommend({movie_id, api_key, language, region, imgPath}) {
         const fetchmovies = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/recommendations?api_key=${api_key}&language=${language}`)
+                const response = await axios.get(`${url}/movie/${movie_id}/recommendations?api_key=${api_key}&language=${language}`)
                 const movies = response.data.results
                 setMovies(movies)
                 setError(null)
@@ -38,7 +38,7 @@ function Recommend({movie_id, api_key, language, region, imgPath}) {
             setLoading(false)
         }
         fetchmovies();
-    }, [])
+    }, [url, movie_id, api_key, language])
 
     const onSetLike = (e) => {       
         const data = JSON.parse(e.target.value)

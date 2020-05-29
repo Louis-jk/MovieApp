@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import MovieDetail from '../components/MovieDetail'
 import Nav from '../layout/Nav'
+import ScrollToTop from '../components/ScrollToTop'
 
 function MovieDetailContainer({match, history}) {
 
@@ -15,14 +16,11 @@ function MovieDetailContainer({match, history}) {
 
     const movie_id = match.params.id
 
-    const onChange = (e) => {
-        console.log(e)
-    }
-
     return (
         <>
             <Nav language={language} region={region} />
-            <MovieDetail movie_id={movie_id} api_key={api_key} url={url} imgPath={imgPath} language={language} region={region} onChange={onChange} history={history} />
+            <MovieDetail movie_id={movie_id} api_key={api_key} url={url} imgPath={imgPath} language={language} region={region} history={history} />
+            <ScrollToTop />
         </>
     )
 }

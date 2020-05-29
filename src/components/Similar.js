@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import MovieList from './MovieListOpen'
 
-function Similar({movie_id, api_key, language, region, imgPath}) {
+function Similar({movie_id, url, api_key, language, region, imgPath}) {
     const [movies, setMovies] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -26,7 +26,7 @@ function Similar({movie_id, api_key, language, region, imgPath}) {
         const fetchmovies = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${api_key}&language=${language}`)
+                const response = await axios.get(`${url}/movie/${movie_id}/similar?api_key=${api_key}&language=${language}`)
                 const recommends = response.data.results
                 setMovies(recommends)
                 setError(null)
@@ -36,7 +36,7 @@ function Similar({movie_id, api_key, language, region, imgPath}) {
             setLoading(false)
         }
         fetchmovies();
-    }, [])
+    }, [url, movie_id, api_key, language])
 
     const onSetLike = (e) => {       
         const data = JSON.parse(e.target.value)
