@@ -244,6 +244,31 @@ input:-webkit-autofill:active  {
 
 .iframe100 {   display: block;   border: none;   height: 300px;   width: 100%; }
 
+.trailer-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+/* react-multi-carousel Customize */
+
+.react-multiple-carousel__arrow::before {
+  color: #ffb503 !important;
+  font-size: 30px !important;
+}
+
+.react-multiple-carousel__arrow--right {
+  right: 0 !important;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: 0 !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
 /* Bootstrap Customize */
 @media (min-width: 1200px) and (max-width: 2009px) {
   .row-cols-xl-5>* {

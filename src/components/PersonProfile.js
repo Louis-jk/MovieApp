@@ -6,6 +6,26 @@ import '../App.css'
 import Nav from '../layout/Nav'
 import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
+const responsive = {
+    desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 11,
+        slidesToSlide: 11 // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 3,
+      slidesToSlide: 3 // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1 // optional, default to 1.
+    }
+  }
 
 const api_key = process.env.REACT_APP_ACCESSKEY
 const url = process.env.REACT_APP_BASEURL
@@ -114,9 +134,22 @@ function PersonProfile({history, match}) {
 
                 <div className="col-12 my-5">       
                     <h3 className="col-12 mt-5">갤러리</h3>
+                    <Carousel 
+                        responsive={responsive} 
+                        infinite={true} 
+                        removeArrowOnDeviceType={["tablet", "mobile"]} 
+                        itemClass="carousel-item-padding-20-px" 
+                        autoPlay={true}
+                        autoPlaySpeed={1500}
+                        keyBoardControl={true}
+                        customTransition="all 1.5s"
+                        transitionDuration={1500}
+                        containerClass="carousel-container"                        
+                    >
                         {                            
                             images.map((img,index) => <div key={index}><img src={`${imgPath}/w185${img.file_path}`} alt={img.file_path} /></div>)
                         }
+                    </Carousel>
                 </div>
 
                 <div className="mt-5 col-12">

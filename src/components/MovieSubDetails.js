@@ -113,7 +113,7 @@ function MovieSubDetails ({ movie_id, api_key, url, imgPath, language, region })
                     <div className="row inline-block">
                         {
                             trailer.length === 0 ? <p className="block mx-3">관련영상이 없습니다.</p> :
-                            trailer.map(video => <div key={video.id} className="mx-3 inline-block"><iframe src={`https://www.youtube.com/embed/${video.key}`} width="400" height="300" frameBorder="0" scrolling="no" allowFullScreen></iframe></div>)
+                            trailer.map(video => <div key={video.id} className="mx-3 inline-block"><iframe title={video.key} src={`https://www.youtube.com/embed/${video.key}`} width="400" height="300" frameBorder="0" scrolling="no" allowFullScreen></iframe></div>)
                             .slice(0,5)
                         }
                     </div>

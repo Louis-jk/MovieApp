@@ -4,6 +4,26 @@ import Loading from './Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import MovieList from './MovieListOpen'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
+const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 6,
+      slidesToSlide: 6 // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2 // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1 // optional, default to 1.
+    }
+  }
 
 function Similar({movie_id, url, api_key, language, region, imgPath}) {
     const [movies, setMovies] = useState(null)
@@ -56,12 +76,26 @@ function Similar({movie_id, url, api_key, language, region, imgPath}) {
 
             <h3>비슷한 장르의 영화</h3>
             
-            <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
+            <div>
                 {
                     movies.length === 0 ? <p className="col-12 my-3">비슷한 장르의 영화가 없습니다.</p> :
-                    movies.map(movie => <div key={movie.id}>                    
-                        <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />
-                    </div>)
+                    <Carousel 
+                        responsive={responsive} 
+                        infinite={true} 
+                        removeArrowOnDeviceType={["tablet", "mobile"]} 
+                        itemClass="carousel-item-padding-40-px" 
+                        autoPlay={false}
+                        autoPlaySpeed={1500}
+                        keyBoardControl={true}
+                        customTransition="all .5s"
+                        transitionDuration={500}
+                        containerClass="carousel-container"
+                        additionalTransfrom={-20 * 5}
+                    >
+                        {movies.map(movie => <div key={movie.id}>
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />                        
+                        </div>)}
+                    </Carousel>
                 }
             </div>
             

@@ -5,6 +5,26 @@ import Axios from 'axios'
 import Recommend from './Recommend'
 import Similar from './Similar'
 import { Link } from 'react-router-dom'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
+const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 6,
+      slidesToSlide: 6 // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2 // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1 // optional, default to 1.
+    }
+  }
 
 
 function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, region, onChange }) {  
@@ -46,6 +66,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     useEffect(() => {
         movieDetail()       
     }, [url, movie_id, api_key, language])
+
 
     if (loading) return <Loading />
     if (error) return <div>에러 발생</div>
@@ -102,15 +123,31 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                     <p>{(details.production_countries.map(country => country.name)) ? details.production_countries.map(country => country.name).join(' / ') : "작성된 제조국이 없습니다."}</p>                    
                 </div>
 
+                
                 <div className="col-md-12 mt-5">
                     <h5>관련영상</h5>
-                    <div className="row inline-block">
+                    
+                    <div>
                         {
-                            trailer.length === 0 ? <p className="block mx-3">관련영상이 없습니다.</p> :
-                            trailer.map(video => <div key={video.id} className="mx-3 inline-block"><iframe src={`https://www.youtube.com/embed/${video.key}`} width="400" height="300" frameBorder="0" scrolling="no" allowFullScreen></iframe></div>)
-                            .slice(0,5)
+                            trailer.length === 0 ? <p className="block mx-3">관련영상이 없습니다.</p> :  
+                            <Carousel 
+                                responsive={responsive} 
+                                infinite={true} 
+                                removeArrowOnDeviceType={["tablet", "mobile"]} 
+                                itemClass="carousel-item-padding-40-px" 
+                                autoPlay={false}
+                                autoPlaySpeed={1500}
+                                keyBoardControl={true}
+                                customTransition="all .5s"
+                                transitionDuration={500}
+                                containerClass="carousel-container"
+                            >
+                            {  
+                            trailer.map(video => <div key={video.id} className="trailer-wrap"><iframe className="trailer-wrap" title={video.key} src={`https://www.youtube.com/embed/${video.key}`} width="400" height="300" frameBorder="0" scrolling="no" allowFullScreen></iframe></div>)                            
+                            }
+                        </Carousel>
                         }
-                    </div>
+                    </div>                    
                 </div>
 
                 <div className="col-md-12 row mt-5">
@@ -147,8 +184,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                                 </ul>
                             }                           
                     </div>
-                </div>
-
+                </div>                
                 <Recommend movie_id={movie_id} url={url} api_key={api_key} language={language} region={region} imgPath={imgPath} />
                 <Similar movie_id={movie_id} url={url} api_key={api_key} language={language} region={region} imgPath={imgPath} />
             </div>            
