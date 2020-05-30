@@ -89,8 +89,7 @@ function Similar({movie_id, url, api_key, language, region, imgPath}) {
                         keyBoardControl={true}
                         customTransition="all .5s"
                         transitionDuration={500}
-                        containerClass="carousel-container"
-                        additionalTransfrom={-20 * 5}
+                        containerClass="carousel-container"                        
                     >
                         {movies.map(movie => <div key={movie.id}>
                             <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />                        
