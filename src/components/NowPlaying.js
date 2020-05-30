@@ -3,7 +3,7 @@ import axios from 'axios'
 import Loading from './Loading'
 import { useSelector, useDispatch } from 'react-redux'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
-import MovieList from './MovieListDefault'
+import MovieList from './MovieList'
 
 const api_key = process.env.REACT_APP_ACCESSKEY
 const url = process.env.REACT_APP_BASEURL

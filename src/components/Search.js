@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Loading from './Loading'
 import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
-import MovieList from './MovieListOpen'
+import MovieList from './MovieList'
 
 const url = process.env.REACT_APP_BASEURL
 const api_key = process.env.REACT_APP_ACCESSKEY

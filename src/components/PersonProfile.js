@@ -3,12 +3,13 @@ import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import Loading from './Loading'
 import '../App.css'
-import Nav from '../layout/Nav-copy'
+import Nav from '../layout/Nav'
 import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from 'react-router-dom'
+import MovieList from './MovieList'
 
 const responsive = {
     desktop: {
@@ -159,21 +160,7 @@ function PersonProfile({history, match}) {
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
                         {   castMovies.length === 0 ? <p className="block mx-3">출연한 영화가 없습니다.</p> :
                             castMovies.map(movie => <div key={movie.id}>                    
-                            <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                                <img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w500${movie.poster_path}` : "../noimg.jpg" } title={movie.title} alt={movie.title} />
-                                <div className="card-body px-0 px-md-1">
-                                    <h5 className="card-title">{movie.title}</h5>
-                                    <p className="card-text">평점 : {movie.vote_average}</p>
-                                    <p>장르 : {movie.genre_ids.map(genreId => genreId+',')}</p>                            
-                                    <p>개봉일자 : {movie.release_date}</p>
-                                    <button className="btn border-light float-right" value={movie.id} onClick={onClick}>자세히 보기</button>
-                                    {likedMovies.find(e => e.id === movie.id) ?
-                                        <button className="btn border-light float-right liked done" value={JSON.stringify(movie)} onClick={onSetLike}>찜취소</button>
-                                        :
-                                        <button className="btn border-light float-right liked" value={JSON.stringify(movie)} onClick={onSetLike}>찜하기</button>
-                                    }
-                                </div>
-                            </div>
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
                             </div>)}
                     </div>
                 </div>
@@ -185,21 +172,7 @@ function PersonProfile({history, match}) {
                         {   crewMovies.length === 0 ? <p className="block mx-3">제작에 참여한 영화가 없습니다.</p> :
                             crewMovies.map(movie => 
                             <div key={movie.id}>                    
-                                <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                                    <img className="card-img-top" src={(movie.poster_path)? "https://image.tmdb.org/t/p/w500"+movie.poster_path : "../noimg.jpg"} title={movie.title} alt={movie.title} />
-                                    <div className="card-body px-0 px-md-1">
-                                        <h5 className="card-title">{movie.title}</h5>
-                                        <p className="card-text">평점 : {movie.vote_average}</p>
-                                        <p>장르 : {movie.genre_ids.map(genreId => genreId+',')}</p>                            
-                                        <p>개봉일자 : {movie.release_date}</p>
-                                        <button className="btn border-light float-right" value={movie.id} onClick={onClick}>자세히 보기</button>
-                                        {likedMovies.find(e => e.id === movie.id) ?
-                                            <button className="btn border-light float-right liked done" value={JSON.stringify(movie)} onClick={onSetLike}>찜취소</button>
-                                            :
-                                            <button className="btn border-light float-right liked" value={JSON.stringify(movie)} onClick={onSetLike}>찜하기</button>
-                                        }
-                                    </div>
-                                </div>
+                                <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
                             </div>)}
                         </div>
                     </div>

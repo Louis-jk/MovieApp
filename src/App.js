@@ -9,7 +9,6 @@ import MovieDetailContainer from './container/MovieDetailContainer';
 import LikedContainer from './container/LikedContainer';
 import PersonProfile from './components/PersonProfile';
 import Search from './components/Search';
-import MovieSubDetailsContainer from './container/MovieSubDetailsContainer'
 
 function App() {
   
@@ -22,7 +21,6 @@ function App() {
         <Route path="/liked" component={LikedContainer}/>
         <Route path="/search" component={Search} />
         <Route path="/details/:id" component={MovieDetailContainer} />
-        <Route path="/sub-details/:id" component={MovieSubDetailsContainer} />
         <Route path="/person/:id" component={PersonProfile} />
         <Route render={({location}) => (
             <div>

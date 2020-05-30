@@ -3,7 +3,7 @@ import axios from 'axios'
 import Loading from './Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLikedMovies, setUnLikedMovies,  } from '../modules/movieAPI'
-import MovieList from './MovieListOpen'
+import MovieList from './MovieList'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
