@@ -59,7 +59,7 @@ function Upcoming({language, region, category}) {
         
         return () => cancel()
                 
-    }, [url, api_key, language, region, pageNumber])
+    }, [language, region, pageNumber])
 
     
     const onSetLike = (e) => {       

@@ -69,7 +69,7 @@ function Popular({language, region, category}) {
         })
         return () => cancel()
         
-    }, [url, api_key, language, region, pageNumber])
+    }, [language, region, pageNumber])
 
     
 
@@ -87,10 +87,9 @@ function Popular({language, region, category}) {
 
     return (
         <div className="container-fluid px-lg-5">
-            <h5 className="mt-5 border-left pl-3 mb-2">인기영화</h5>
-            {/* <Regions category={category} language={language} region={region} onChange={onChange} /> */}
+            <h5 className="mt-5 border-left pl-3 mb-2">인기영화</h5>            
             <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">                
-                {                
+                {
                 movies.map((movie, index) => 
                     (movies.length === index + 1) ?                        
                         <div ref={lastMovieElementRef} key={movie.id}>

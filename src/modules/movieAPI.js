@@ -18,6 +18,8 @@ const TRAILER = 'TRAILER'
 const SET_HASHMORE = 'SET_HASHMORE'
 const SET_PAGENUMBER = 'SET_PAGENUMBER'
 const SET_GENRES = 'SET_GENRES'
+const SET_LIKEMOVIEID = 'SET_LIKEMOVIEID'
+const SET_UNLIKEMOVIEID = 'SET_UNLIKEMOVIEID'
 
 
 // action method
@@ -32,6 +34,8 @@ export const setMoviesUp = movies => ({ type: SET_MOVIES_UPCOMING, movies})
 export const setMoviesPop = movies => ({ type: SET_MOVIES_POPULAR, movies})
 export const setGenres = data => ({ type: SET_GENRES, data })
 
+export const setLikeMovieId = id => ({ type: SET_LIKEMOVIEID, id})
+export const setUnLikeMovieId = id => ({ type: SET_LIKEMOVIEID, id})
 export const setLang = language => ({ type: SET_LANGUAGE, language })
 export const setRegion = region => ({ type: SET_REGION, region })
 export const setDetails = details => ({ type: DETAILS, details })
@@ -46,6 +50,7 @@ const initialState = {
     hasMore: false,
     movieList: [],
     likedMovies: [],
+    likeMovieId: [],
     genres: [],
     apis:{
         nowPlaying: [],
@@ -103,6 +108,21 @@ export default function setLangRegion(state = initialState, action) {
                 ...state,
                 likedMovies: [
                     ...state.likedMovies.filter(likedMovies => likedMovies.id !== action.id)
+                ]
+            }
+        case SET_LIKEMOVIEID:
+            return {
+                loading: false,
+                likeMovieId: [
+                    ...state.likeMovieId,
+                    action.id
+                ]
+            }
+        case SET_UNLIKEMOVIEID:
+            return {
+                loading: false,
+                likeMovieId: [
+                    ...state.likeMovieId.filter(likeMovieId => likeMovieId.id !== action.id)
                 ]
             }
         case SET_GENRES:

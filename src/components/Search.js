@@ -22,7 +22,7 @@ function Search() {
     const [query, setQuery] = useState('')
     const [pageNumber, setPageNumber] = useState(1)
 
-    const { movies, hasMore, loading, error } = useMovieSearch(url,api_key, query, language, pageNumber)
+    const { movies, hasMore, loading, error } = useMovieSearch(url, api_key, query, language, pageNumber)
 
     const observer = useRef()
     const lastMovieElementRef = useCallback( node => {
@@ -31,7 +31,6 @@ function Search() {
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
                 setPageNumber(prevPageNumber => prevPageNumber + 1)
-                // console.log('Visible')
             }
         })
         if (node) observer.current.observe(node)
@@ -41,11 +40,6 @@ function Search() {
         const {value} = e.target
         setQuery(value)
         setPageNumber(1)
-    }
-
-    const onClick = (e) => {
-        const id = e.target.value
-        window.open(`/sub-details/${id}`,'_blank');
     }
 
     const onSetLike = (e) => {       
@@ -75,16 +69,17 @@ function Search() {
                     movies.map((movie, index) => 
                         (movies.length === index + 1) ?
                         <div ref={lastMovieElementRef} key={movie.id}>
-                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />
-                        </div> :
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
+                        </div>
+                        :                    
                         <div key={movie.id}>
-                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
                         </div>
                         )}
                 </div>
                 
                 { loading ? <Loading /> : null }
-                <div>{error && 'Error'}</div>                     
+                { error && <div>Error</div> }                    
             </div>
             <ScrollToTop />
         </>

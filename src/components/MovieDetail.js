@@ -7,6 +7,8 @@ import Similar from './Similar'
 import { Link } from 'react-router-dom'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { useSelector, useDispatch } from 'react-redux'
+import { setLikeMovieId, setUnLikeMovieId } from '../modules/movieAPI'
 
 const responsive = {
     desktop: {
@@ -27,7 +29,11 @@ const responsive = {
   }
 
 
-function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, region, onChange }) {  
+function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, region }) {  
+
+    const dispatch = useDispatch()
+    const state = useSelector(state => state.movieAPI)
+    const {likedMovies, likeMovieId} = state
 
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
@@ -39,32 +45,31 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     const [ btnMsg01, setBtnMsg01 ] = useState(false)
     const [ btnMsg02, setBtnMsg02 ] = useState(false)
 
-    const movieDetail = async () => {
+
+
+    useEffect(() => {        
         
         setLoading(true)
         setError(false)
+        
+            Axios.get(`${url}/movie/${movie_id}/videos?api_key=${api_key}&language=${language}`)
+            .then(res => res.data.results)
+            .then(data => setTrailer(data))
+            .catch(e => setError(e))
 
-        try {            
-            const videos = await Axios.get(`${url}/movie/${movie_id}/videos?api_key=${api_key}&language=${language}`)
-            const trailer = videos.data.results 
-            setTrailer(trailer)
+            Axios.get(`${url}/movie/${movie_id}/credits?api_key=${api_key}`)
+            .then(res => res.data)
+            .then(data => setCredits(data))
+            .catch(e => setError(e))
 
-            const credit = await Axios.get(`${url}/movie/${movie_id}/credits?api_key=${api_key}`);
-            const credits = credit.data
-            setCredits(credits)
+            Axios.get(`${url}/movie/${movie_id}?api_key=${api_key}&language=${language}`)
+            .then(res => res.data)
+            .then(data => setDetails(data))
+            .catch(e => setError(e))
 
-            const detail = await Axios.get(`${url}/movie/${movie_id}?api_key=${api_key}&language=${language}`)
-            const details = detail.data
-            setDetails(details)
-
-        } catch(err) {
-            setError(true)
-        }
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        movieDetail()       
+        setLoading(false)            
+        
+        
     }, [url, movie_id, api_key, language])
 
 
@@ -98,11 +103,19 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
         setBtnMsg02(!btnMsg02)
     }
              
+    const onSetLike = (e) => {       
+        const data = JSON.parse(e.target.value)
+        if (likedMovies.find(l => l.id === data)) {
+            dispatch(setLikeMovieId(data))
+        } else {
+            dispatch(setUnLikeMovieId(data))
+        }
+    }
         
     return (
         <div className="container-fluid">
             <div className="mt-5">
-                <a href="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</a>
+                <Link to="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</Link>
             </div>
             <div style={ backgroundImage }></div>
             <div className="row px-md-5 py-md-5">
@@ -110,17 +123,26 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                     <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded" title={details.title} alt={details.title}/>                    
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details">
-                    <h3 className="display-4">{details.title}</h3>
-                    {/* <p>({(details.adult) ? "미성년자 관람불가" : "미성년자 시청가능"})</p> */}
-                    <h5 className="display-5">Original Title : {details.original_title}</h5>
-                    <h5 className="mt-5 mb-3">영화 줄거리</h5>
-                    <p>{(details.overview) ? details.overview : "작성된 줄거리가 없습니다."}</p>
-                    <h5 className="mt-5 mb-3">태그라인</h5>
-                    <p>{(details.tagline) ? details.tagline : "작성된 태그라인이 없습니다."}</p>
-                    <h5 className="mt-5 mb-3">장르</h5>
-                    <p>{(details.genres.map(genre => genre.name)) ? details.genres.map(genre => genre.name).join(', ') : "작성된 장르가 없습니다."}</p>
-                    <h5 className="mt-5 mb-3">제조국</h5>
-                    <p>{(details.production_countries.map(country => country.name)) ? details.production_countries.map(country => country.name).join(' / ') : "작성된 제조국이 없습니다."}</p>                    
+                    <div>
+                        <h3 className="display-4">{details.title}</h3>
+                        {/* <p>({(details.adult) ? "미성년자 관람불가" : "미성년자 시청가능"})</p> */}
+                        <h5 className="display-5">Original Title : {details.original_title}</h5>
+                        <h5 className="mt-5 mb-3">영화 줄거리</h5>
+                        <p>{(details.overview) ? details.overview : "작성된 줄거리가 없습니다."}</p>
+                        <h5 className="mt-5 mb-3">태그라인</h5>
+                        <p>{(details.tagline) ? details.tagline : "작성된 태그라인이 없습니다."}</p>
+                        <h5 className="mt-5 mb-3">장르</h5>
+                        <p>{(details.genres.map(genre => genre.name)) ? details.genres.map(genre => genre.name).join(', ') : "작성된 장르가 없습니다."}</p>
+                        <h5 className="mt-5 mb-3">제조국</h5>
+                        <p>{(details.production_countries.map(country => country.name)) ? details.production_countries.map(country => country.name).join(' / ') : "작성된 제조국이 없습니다."}</p>                    
+                    </div>
+                    {/* <div>
+                        {likedMovies.find(e => e.id === movie_id) || likeMovieId.find(id => id.id === movie_id) ?
+                            <button className="btn border-light float-right liked done" value={JSON.stringify(movie_id)} onClick={onSetLike}>찜취소</button>
+                            :
+                            <button className="btn border-light float-right liked" value={JSON.stringify(movie_id)} onClick={onSetLike}>찜하기</button>
+                        }
+                    </div> */}
                 </div>
 
                 
@@ -129,7 +151,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                     
                     <div>
                         {
-                            trailer.length === 0 ? <p className="block mx-3">관련영상이 없습니다.</p> :  
+                            !trailer ? <p className="block mx-3">관련영상이 없습니다.</p> :  
                             <Carousel 
                                 responsive={responsive} 
                                 infinite={true} 

@@ -19,7 +19,7 @@ function ScrollToTop() {
             }
         })
         return () => setScroll(false)
-    }, [setScroll])    
+    }, [])    
 
 
     return <div className={scroll ? 'toTop active' : 'toTop'} onClick={onScrollToUp}><i className="arrow up"></i></div>

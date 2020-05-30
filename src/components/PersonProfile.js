@@ -76,19 +76,11 @@ function PersonProfile({history, match}) {
 
     useEffect(() => {
         fetchmovies()
-    }, [url, personId, api_key, language])
+    }, [personId, language])
 
- 
-    if (loading) return <Loading />
-    if (error) return <div>에러 발생</div>
-    if (!castMovies) return <div>추천영화가 없습니다.</div>
     
-    const onClick = (e) => {
-        const id = e.target.value
-        dispatch({ type: 'MOVIE_ID', id })
-        window.location.replace(`/details/${id}`); 
-    }
 
+   
     const onSetLike = (e) => {       
         const data = JSON.parse(e.target.value)
         if (likedMovies.find(l => l.id === data.id)) {
@@ -97,6 +89,12 @@ function PersonProfile({history, match}) {
             dispatch(setLikedMovies(data))
         }
     }
+
+    if (loading) return <Loading />
+    if (error) return <div>에러 발생</div>
+    if (!castMovies) return <div>추천영화가 없습니다.</div>
+    if (!crewMovies) return <div>추천영화가 없습니다.</div>
+    if (!images) return <div>이미지가 없습니다.</div>
 
     return (
         <>
@@ -108,7 +106,10 @@ function PersonProfile({history, match}) {
 
             <div className="row px-md-5 py-md-5">
                 <div className="col-md-4 col-xl-3 ">
-                    <img src={ person.profile_path ? `${imgPath}/w500${person.profile_path}` : "../noimg.jpg" } title={person.name} alt={person.name} />
+                    {
+                        (!person.profile_path) ? <img src="../noimg.jpg" alt="" /> :
+                        <img src={`${imgPath}/w500${person.profile_path}`} title={person.name} alt={person.name} />
+                    }
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details">
                     <h3 className="display-4 mb-5">{ person.name ? person.name : "정보가 없습니다."}</h3>
@@ -148,7 +149,8 @@ function PersonProfile({history, match}) {
                         transitionDuration={1500}
                         containerClass="carousel-container"                        
                     >
-                        {                            
+                        {   
+                            !images ? <img src="../noimg.jpg" alt="" />  :                     
                             images.map((img,index) => <div key={index}><img src={`${imgPath}/w185${img.file_path}`} alt={img.file_path} /></div>)
                         }
                     </Carousel>
@@ -158,7 +160,7 @@ function PersonProfile({history, match}) {
                     <h3 className="sub_title">{ person.name ? person.name : "정보가 없습니다."} 의 출연 영화</h3>
                     
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
-                        {   castMovies.length === 0 ? <p className="block mx-3">출연한 영화가 없습니다.</p> :
+                        {   !castMovies ? <p className="block mx-3">출연한 영화가 없습니다.</p> :
                             castMovies.map(movie => <div key={movie.id}>                    
                             <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
                             </div>)}
@@ -169,18 +171,20 @@ function PersonProfile({history, match}) {
                     <h3 className="sub_title">{ person.name ? person.name : "정보가 없습니다."} 의 제작 참여 영화</h3>
                     
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
-                        {   crewMovies.length === 0 ? <p className="block mx-3">제작에 참여한 영화가 없습니다.</p> :
+                        {   
+                            !crewMovies ? <p className="block mx-3">제작에 참여한 영화가 없습니다.</p> :
                             crewMovies.map(movie => 
                             <div key={movie.id}>                    
                                 <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
-                            </div>)}
-                        </div>
+                            </div>)
+                        }
                     </div>
-                </div>            
-            </div>
-            <ScrollToTop />
-            </>
-        )
-    }
+                </div>
+            </div>            
+        </div>
+        <ScrollToTop />
+        </>
+    )
+}
 
 export default PersonProfile
