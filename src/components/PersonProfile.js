@@ -3,11 +3,12 @@ import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import Loading from './Loading'
 import '../App.css'
-import Nav from '../layout/Nav'
+import Nav from '../layout/Nav-copy'
 import ScrollToTop from './ScrollToTop'
 import { setLikedMovies, setUnLikedMovies } from '../modules/movieAPI'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from 'react-router-dom'
 
 const responsive = {
     desktop: {
@@ -101,7 +102,7 @@ function PersonProfile({history, match}) {
         <Nav />
         <div className="container-fluid">
             <div className="mt-5">
-                <a href="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</a>
+                <Link href="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</Link>
             </div>
 
             <div className="row px-md-5 py-md-5">
