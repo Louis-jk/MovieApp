@@ -56,7 +56,7 @@ function Liked({language, region, category}) {
                 movies.map(movie => 
                     <div key={movie.id}>
                         <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                            <img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w780${movie.poster_path}` : "noimg.jpg"} alt={movie.title} title={movie.title} />
+                        <Link to={`/details/${movie.id}`}><img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w780${movie.poster_path}` : "noimg.jpg"} alt={movie.title} title={movie.title} /></Link>
                             <div className="card-body px-0 px-md-3">
                                 <h5 className="card-title">{movie.title}</h5>
                                 <p className="card-text">평점 : {movie.vote_average}</p>
