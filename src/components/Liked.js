@@ -59,7 +59,7 @@ function Liked({language, region, category}) {
                         <Link to={`/details/${movie.id}`}><img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w780${movie.poster_path}` : "noimg.jpg"} alt={movie.title} title={movie.title} /></Link>
                             <div className="card-body px-0 px-md-3">
                                 <h5 className="card-title">{movie.title}</h5>
-                                <p className="card-text">평점 : {movie.vote_average}</p>
+                                <p className="card-text">평점 : {movie.vote_average} / 10</p>
                                 {/* <p>장르 : {movie.genres.map(genre => genre.name).join(', ')}</p> */}
                                 <p>개봉일자 : {movie.release_date}</p>         
                                 <Link to={`/details/${movie.id}`} className="btn border-light float-right liked">자세히 보기</Link>
