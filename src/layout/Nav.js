@@ -51,6 +51,10 @@ function Nav({category, language, region, page}) {
                     <NavLink to="/liked" className="nav-link"
                     activeClassName='nav-menu'><em>찜한영화</em></NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink to="/watched" className="nav-link"
+                    activeClassName='nav-menu'><em>최근본영화</em></NavLink>
+                </li>
                 </ul>
             </div>
         </nav>

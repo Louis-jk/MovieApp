@@ -9,6 +9,7 @@ import MovieDetailContainer from './container/MovieDetailContainer';
 import LikedContainer from './container/LikedContainer';
 import PersonProfile from './components/PersonProfile';
 import Search from './components/Search';
+import WatchListContainer from './container/WatchListContainer';
 
 function App() {
   
@@ -22,6 +23,7 @@ function App() {
         <Route path="/search" component={Search} />
         <Route path="/details/:id" component={MovieDetailContainer} />
         <Route path="/person/:id" component={PersonProfile} />
+        <Route path="/watched" component={WatchListContainer} />
         <Route render={({location}) => (
             <div>
               <h2>이 페이지는 존재하지 않습니다.</h2>
