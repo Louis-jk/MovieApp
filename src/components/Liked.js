@@ -48,8 +48,7 @@ function Liked({language, region, category}) {
         <div className="container-fluid px-lg-5">
             
             <h5 className="mt-5 border-left pl-3 mb-2">찜한영화</h5>
-
-            {/* <Regions category={category} language={language} region={region} onChange={onChange} /> */}
+            
             <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
             
                 {
