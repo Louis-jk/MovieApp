@@ -12,19 +12,19 @@ function Nav({category, language, region, page}) {
 
     const dispatch = useDispatch()    
 
-    useEffect(()=>{
-        Axios.get(`${url}/genre/movie/list?api_key=${api_key}&language=${language}`)
-        .then(res => {            
-            dispatch(setGenres(res.data.genres))
-        }).catch( e => {
-            console.log(e)
-        })
-    },[dispatch, language])
+    // useEffect(()=>{
+    //     Axios.get(`${url}/genre/movie/list?api_key=${api_key}&language=${language}`)
+    //     .then(res => {            
+    //         dispatch(setGenres(res.data.genres))
+    //     }).catch( e => {
+    //         console.log(e)
+    //     })
+    // },[dispatch, language])
 
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a className="navbar-brand" href="/">PROJECT01</a>
+            <a className="navbar-brand">theMovies</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>

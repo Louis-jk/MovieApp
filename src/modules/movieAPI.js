@@ -21,6 +21,8 @@ const SET_GENRES = 'SET_GENRES'
 const SET_LIKEMOVIEID = 'SET_LIKEMOVIEID'
 const SET_UNLIKEMOVIEID = 'SET_UNLIKEMOVIEID'
 const SET_WATCHLIST = 'SET_WATCHLIST'
+const SET_LIKEDLIST = 'SET_LIKEDLIST'
+const SET_UNLIKEDLIST = 'SET_UNLIKEDLIST'
 
 
 // action method
@@ -45,6 +47,8 @@ export const setId = id => ({ type: MOVIE_ID, id })
 export const setRecommend = recommends => ({ type: RECOMMEND, recommends })
 export const setTrailer = trailer => ({ type: TRAILER, trailer})
 export const setWatchList = id => ({ type: SET_WATCHLIST, id })
+export const setLikedList = id => ({ type: SET_LIKEDLIST, id })
+export const setUnLikedList = id => ({ type: SET_UNLIKEDLIST, id })
 
 
 // initialize
@@ -69,6 +73,7 @@ const initialState = {
     personId: '',
     trailer: '',
     watchList: [],
+    likedList: [],
     error: null
 }
 
@@ -215,6 +220,22 @@ export default function setLangRegion(state = initialState, action) {
                     ...new Set([...state.watchList,
                     action.id]
                     )
+                ]
+            }
+        case SET_LIKEDLIST: 
+            return {
+                ...state,
+                likedList: [
+                    ...new Set([...state.likedList,
+                    action.id]
+                    )
+                ]
+            }
+        case SET_UNLIKEDLIST: 
+            return {
+                ...state,
+                likedList: [
+                    ...state.likedList.filter(id => id !== action.id)
                 ]
             }
         case ERROR:

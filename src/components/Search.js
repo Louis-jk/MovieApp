@@ -79,7 +79,7 @@ function Search() {
                 </div>
                 
                 { loading ? <Loading /> : null }
-                { error && <div>Error</div> }                    
+                { error && <div className="info-msg"><p>찾으시는 영화가 없습니다.</p></div> }
             </div>
             <ScrollToTop />
         </>

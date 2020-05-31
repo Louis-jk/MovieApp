@@ -36,6 +36,11 @@ function Recommend({movie_id, url, api_key, language, region, imgPath}) {
     const state = useSelector(state => state.movieAPI)
     const likedMovies = state.likedMovies
 
+    const onClick = (e) => {
+        const id = e.target.value
+        dispatch({ type: 'MOVIE_ID', id })
+        window.open(`/sub-details/${id}`,'_blank');
+    }
 
     useEffect(() => {
         const fetchmovies = async () => {
@@ -78,7 +83,7 @@ function Recommend({movie_id, url, api_key, language, region, imgPath}) {
                     <Carousel 
                         responsive={responsive} 
                         infinite={true} 
-                        removeArrowOnDeviceType={["tablet", "mobile"]} 
+                        // removeArrowOnDeviceType={["tablet", "mobile"]} 
                         itemClass="carousel-item-padding-40-px" 
                         autoPlay={false}
                         autoPlaySpeed={1500}
@@ -88,7 +93,7 @@ function Recommend({movie_id, url, api_key, language, region, imgPath}) {
                         containerClass="carousel-container"                        
                     >
                         {movies.map(movie => <div key={movie.id}>
-                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />                        
+                            <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onClick={onClick} onSetLike={onSetLike} />                        
                         </div>)}
                     </Carousel>
                 }

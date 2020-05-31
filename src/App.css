@@ -9,6 +9,7 @@ body {
   font-family: 'Roboto','Noto Sans KR', 'Sawarabi Mincho','Noto Serif JP', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
+  background-color: #111111;
 }
 
 a {
@@ -98,21 +99,6 @@ a:hover {
 {
   transform: translateX(0%);
 }
-
-/* input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border: none;
-  -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0 30px #000 inset !important;
-  transition: background-color 5s ease-in-out 0s;  
-} */
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -224,7 +210,7 @@ input:-webkit-autofill:active  {
 }
 
 .crew_bg {
-  background: linear-gradient(-45deg, #e0bf00, #ffdd1a, #007548, #005e8a);
+  background: #ffb500;
 	background-size: 400% 400%;
 	animation: gradient 7s ease infinite;
 }
@@ -313,7 +299,7 @@ button:focus {
   max-width: 50vw;  
   max-height: 100vh;
   word-wrap: break-word;
-  background-color: #000;
+  background-color: #121212;
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,0.125);
   border-radius: 0.25rem;
@@ -340,9 +326,23 @@ button:focus {
   object-position: center;
 }
 
+
 .navbar-dark .navbar-brand {
+  font-family: 'Libre Barcode 39 Extended Text', cursive; 
   color: #000;
-  font-weight: bold;
+  font-size: 1.65em;
+  padding: 0;
+  margin-right: 2em;
+}
+
+@media (max-width: 414px) {
+  .navbar-dark .navbar-brand {
+    font-size: 1em;
+  }
+}
+
+.navbar-brand:hover {
+  color: #000 !important;
 }
 
 .navbar-dark .navbar-nav .nav-link {

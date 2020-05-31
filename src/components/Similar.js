@@ -20,7 +20,7 @@ const responsive = {
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
       slidesToSlide: 1 // optional, default to 1.
     }
   }
@@ -82,7 +82,7 @@ function Similar({movie_id, url, api_key, language, region, imgPath}) {
                     <Carousel 
                         responsive={responsive} 
                         infinite={true} 
-                        removeArrowOnDeviceType={["tablet", "mobile"]} 
+                        // removeArrowOnDeviceType={["tablet", "mobile"]} 
                         itemClass="carousel-item-padding-40-px" 
                         autoPlay={false}
                         autoPlaySpeed={1500}

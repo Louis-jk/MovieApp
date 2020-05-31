@@ -104,14 +104,14 @@ function PersonProfile({history, match}) {
                 <Link href="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</Link>
             </div>
 
-            <div className="row px-md-5 py-md-5">
-                <div className="col-md-4 col-xl-3 ">
+            <div className="row py-md-5">
+                <div className="col-md-4 col-xl-3 px-5 pl-md-5">
                     {
                         (!person.profile_path) ? <img src="../noimg.jpg" alt="" /> :
-                        <img src={`${imgPath}/w500${person.profile_path}`} title={person.name} alt={person.name} />
+                        <img className="img-fluid rounded" src={`${imgPath}/w500${person.profile_path}`} title={person.name} alt={person.name} />
                     }
                 </div>
-                <div className="col-md-8 mx-xl-auto col-xl-8 details">
+                <div className="col-md-8 mx-xl-auto col-xl-8 details pr-md-5">
                     <h3 className="display-4 mb-5">{ person.name ? person.name : "정보가 없습니다."}</h3>
                     <div className="row col-12">
                         <div className="col-12 col-lg-4">
@@ -135,7 +135,7 @@ function PersonProfile({history, match}) {
                     </div>                                 
                 </div>
 
-                <div className="col-12 my-5">       
+                <div className="col-12 my-5 px-md-5">       
                     <h3 className="col-12 mt-5">갤러리</h3>
                     <Carousel 
                         responsive={responsive} 
@@ -156,7 +156,7 @@ function PersonProfile({history, match}) {
                     </Carousel>
                 </div>
 
-                <div className="mt-5 col-12">
+                <div className="mt-5 col-12 px-md-5">
                     <h3 className="sub_title">{ person.name ? person.name : "정보가 없습니다."} 의 출연 영화</h3>
                     
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
@@ -168,9 +168,9 @@ function PersonProfile({history, match}) {
                 </div>
 
                 <div className="mt-5 col-12 crew_bg">
-                    <h3 className="sub_title">{ person.name ? person.name : "정보가 없습니다."} 의 제작 참여 영화</h3>
+                    <h3 className="sub_title pt-5 px-md-5">{ person.name ? person.name : "정보가 없습니다."} 의 제작 참여 영화</h3>
                     
-                    <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
+                    <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5 px-md-5">
                         {   
                             !crewMovies ? <p className="block mx-3">제작에 참여한 영화가 없습니다.</p> :
                             crewMovies.map(movie => 

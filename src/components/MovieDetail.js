@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSelector, useDispatch } from 'react-redux'
-import { setLikeMovieId, setUnLikeMovieId, setWatchList } from '../modules/movieAPI'
+import { setWatchList, setLikedList, setUnLikedList } from '../modules/movieAPI'
 
 const responsive = {
     desktop: {
@@ -33,7 +33,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
 
     const dispatch = useDispatch()
     const state = useSelector(state => state.movieAPI)
-    const {likedMovies, likeMovieId} = state
+    const {likedList} = state
 
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
@@ -72,7 +72,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
         setLoading(false)            
         
         
-    }, [url, movie_id, api_key, language])
+    }, [dispatch, url, movie_id, api_key, language])
 
 
     if (loading) return <Loading />
@@ -104,24 +104,16 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
         crewVisible <= 8 ? setCrewVisible(e.length) : setCrewVisible(8)        
         setBtnMsg02(!btnMsg02)
     }
-             
-    const onSetLike = (e) => {       
-        const data = JSON.parse(e.target.value)
-        if (likedMovies.find(l => l.id === data)) {
-            dispatch(setLikeMovieId(data))
-        } else {
-            dispatch(setUnLikeMovieId(data))
-        }
-    }
+
         
     return (
         <div className="container-fluid">
             <div className="mt-5">
-                <Link to="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</Link>
+                <Link to="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left ml-3 ml-lg-5" aria-hidden="true" style={{"marginRight": 10 }}></i>뒤로가기</Link>
             </div>
             <div style={ backgroundImage }></div>
             <div className="row px-md-5 py-md-5">
-                <div className="col-md-4 col-xl-3">
+                <div className="col-lg-4 col-xl-3 mx-3 mx-lg-0">
                     <img src={(details.poster_path) ? `${imgPath}/w780${details.poster_path}` : "../noimg.jpg"} className="img-fluid rounded" title={details.title} alt={details.title}/>                    
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details">
@@ -137,7 +129,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                         <p>{(details.genres.map(genre => genre.name)) ? details.genres.map(genre => genre.name).join(', ') : "작성된 장르가 없습니다."}</p>
                         <h5 className="mt-5 mb-3">제조국</h5>
                         <p>{(details.production_countries.map(country => country.name)) ? details.production_countries.map(country => country.name).join(' / ') : "작성된 제조국이 없습니다."}</p>                    
-                    </div>                    
+                    </div>
                 </div>
 
                 

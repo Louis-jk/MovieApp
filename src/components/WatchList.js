@@ -48,9 +48,6 @@ export default function WatchList({url, api_key, imgPath, watchList, likedMovies
         
     }, [watchList, url, api_key, language])
 
-
-    console.log(movies)
-
     const onSetLike = (e) => {       
         const data = JSON.parse(e.target.value)
         if (likedMovies.find(l => l.id === data.id)) {
