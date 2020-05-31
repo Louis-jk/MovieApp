@@ -46,8 +46,9 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     const [ btnMsg02, setBtnMsg02 ] = useState(false)
 
 
-
     useEffect(() => {        
+        
+        window.scrollTo(0,0)
         
         setLoading(true)
         setError(false)
@@ -135,14 +136,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                         <p>{(details.genres.map(genre => genre.name)) ? details.genres.map(genre => genre.name).join(', ') : "작성된 장르가 없습니다."}</p>
                         <h5 className="mt-5 mb-3">제조국</h5>
                         <p>{(details.production_countries.map(country => country.name)) ? details.production_countries.map(country => country.name).join(' / ') : "작성된 제조국이 없습니다."}</p>                    
-                    </div>
-                    {/* <div>
-                        {likedMovies.find(e => e.id === movie_id) || likeMovieId.find(id => id.id === movie_id) ?
-                            <button className="btn border-light float-right liked done" value={JSON.stringify(movie_id)} onClick={onSetLike}>찜취소</button>
-                            :
-                            <button className="btn border-light float-right liked" value={JSON.stringify(movie_id)} onClick={onSetLike}>찜하기</button>
-                        }
-                    </div> */}
+                    </div>                    
                 </div>
 
                 
@@ -151,7 +145,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                     
                     <div>
                         {
-                            !trailer ? <p className="block mx-3">관련영상이 없습니다.</p> :  
+                            trailer.length === 0 ? <p className="block">관련영상이 없습니다.</p> :  
                             <Carousel 
                                 responsive={responsive} 
                                 infinite={true} 
