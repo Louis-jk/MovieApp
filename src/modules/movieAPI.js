@@ -212,8 +212,9 @@ export default function setLangRegion(state = initialState, action) {
             return {
                 ...state,
                 watchList: [
-                    ...state.watchList,
-                    action.id
+                    ...new Set([...state.watchList,
+                    action.id]
+                    )
                 ]
             }
         case ERROR:
