@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSelector, useDispatch } from 'react-redux'
-import { setLikeMovieId, setUnLikeMovieId } from '../modules/movieAPI'
+import { setLikeMovieId, setUnLikeMovieId, setWatchList } from '../modules/movieAPI'
 
 const responsive = {
     desktop: {
@@ -49,6 +49,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     useEffect(() => {        
         
         window.scrollTo(0,0)
+        dispatch(setWatchList(movie_id))
         
         setLoading(true)
         setError(false)
@@ -145,7 +146,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                     
                     <div>
                         {
-                            trailer.length === 0 ? <p className="block">관련영상이 없습니다.</p> :  
+                            !trailer ? <p className="block">관련영상이 없습니다.</p> :  
                             <Carousel 
                                 responsive={responsive} 
                                 infinite={true} 
