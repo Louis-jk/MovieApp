@@ -20,6 +20,7 @@ const SET_PAGENUMBER = 'SET_PAGENUMBER'
 const SET_GENRES = 'SET_GENRES'
 const SET_LIKEMOVIEID = 'SET_LIKEMOVIEID'
 const SET_UNLIKEMOVIEID = 'SET_UNLIKEMOVIEID'
+const SET_WATCHLIST = 'SET_WATCHLIST'
 
 
 // action method
@@ -43,6 +44,8 @@ export const setCredits = credits => ({ type: CREDITS, credits })
 export const setId = id => ({ type: MOVIE_ID, id })
 export const setRecommend = recommends => ({ type: RECOMMEND, recommends })
 export const setTrailer = trailer => ({ type: TRAILER, trailer})
+export const setWatchList = id => ({ type: SET_WATCHLIST, id })
+
 
 // initialize
 const initialState = {
@@ -65,6 +68,7 @@ const initialState = {
     recommends : '',
     personId: '',
     trailer: '',
+    watchList: [],
     error: null
 }
 
@@ -189,24 +193,29 @@ export default function setLangRegion(state = initialState, action) {
                 ...state,
                 recommends : action.recommends
             }          
-        case MOVIE_ID: {
+        case MOVIE_ID: 
             return {
                 ...state,
                 id: action.id
-            }
-        }
-        case PERSON_ID: {
+            }        
+        case PERSON_ID: 
             return {
                 ...state,
                 personId: action.personId
             }
-        }
-        case TRAILER: {
+        case TRAILER: 
             return {
                 ...state,
                 trailer: action.trailer
+            }        
+        case SET_WATCHLIST: 
+            return {
+                ...state,
+                watchList: [
+                    ...state.watchList,
+                    action.id
+                ]
             }
-        }
         case ERROR:
             return {
                 loading: false,
