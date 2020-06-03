@@ -1,35 +1,19 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import '../App.css'
-import Axios from 'axios'
-import { setGenres } from '../modules/movieAPI'
 
-const api_key = process.env.REACT_APP_ACCESSKEY
-const url = process.env.REACT_APP_BASEURL
-
-function Nav({category, language, region, page}) {
-
-    const dispatch = useDispatch()    
-
-    // useEffect(()=>{
-    //     Axios.get(`${url}/genre/movie/list?api_key=${api_key}&language=${language}`)
-    //     .then(res => {            
-    //         dispatch(setGenres(res.data.genres))
-    //     }).catch( e => {
-    //         console.log(e)
-    //     })
-    // },[dispatch, language])
+function Nav() {
+   
 
     return (
         <>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <a className="navbar-brand">theMovies</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarColor02">
+            <div className="collapse navbar-collapse" id="collapseExample">
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                     <NavLink to="/" className="nav-link" exact
