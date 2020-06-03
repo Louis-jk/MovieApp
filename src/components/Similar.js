@@ -74,16 +74,16 @@ function Similar({movie_id, url, api_key, language, region, imgPath}) {
     return (
         <div className="mt-5 col-12">
 
-            <h3>비슷한 장르의 영화</h3>
+            <h3 className="display-6">비슷한 장르의 영화</h3>
             
             <div>
                 {
-                    movies.length === 0 ? <p className="col-12 my-3">비슷한 장르의 영화가 없습니다.</p> :
+                    movies.length === 0 ? <p className="row-col-12 my-3">비슷한 장르의 영화가 없습니다.</p> :
                     <Carousel 
                         responsive={responsive} 
                         infinite={true} 
-                        // removeArrowOnDeviceType={["tablet", "mobile"]} 
-                        itemClass="carousel-item-padding-40-px" 
+                        removeArrowOnDeviceType={["mobile"]} // "tablet",
+                        itemClass="carousel-item-padding-20-px" 
                         autoPlay={false}
                         autoPlaySpeed={1500}
                         keyBoardControl={true}

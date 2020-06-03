@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  overflow-x: hidden;
 }
 
 body {
@@ -10,6 +11,7 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   background-color: #111111;
+  letter-spacing: -1px;
 }
 
 a {
@@ -22,10 +24,28 @@ a:hover {
   color: #fff;
 }
 
+.primary {
+  color: #ffb500;
+}
+
+.primary:hover {
+  color: #ffb500;
+}
+
 .display-4 {
   font-size: 3.5rem;
   font-weight: 500;
   line-height: 1.2;
+  color: #ffb500;
+}
+
+.display-5 {
+  font-size: 2rem;
+}
+
+.display-6 {
+  font-size: 2rem;
+  color: #ffb500;
 }
 
 .sub_title {  
@@ -124,7 +144,7 @@ input:-webkit-autofill:active  {
   color: #ffb500;
   font-size: 1.6em;
   cursor: pointer;
-  z-index: 99999;
+  z-index: 10;
   transition: all 0.3s ease;
 }
 
@@ -227,14 +247,47 @@ input:-webkit-autofill:active  {
 	}
 }
 
+.trailer-wrap { 
+  position:relative;
+  width:100%; 
+  height:0; 
+  padding-bottom:56.25%; 
+} 
 
-.iframe100 {   display: block;   border: none;   height: 300px;   width: 100%; }
+.trailer-content {
+  position: absolute;
+  margin: 0 5%;
+}
+
+.trailer-wrap iframe { 
+  width:100%; 
+  height:100%; 
+  border-radius: 7px;
+}
+
+.backBtn {
+  font-size: 1.3rem;
+  margin-left: 2%;
+  transition: all .3s ease;
+}
+
+.backBtn:hover, .backBtn:active, 
+.backBtn:focus {
+  color: #ffb500;
+}
+
+.backIcon {
+  margin-right: 5px;
+  vertical-align: text-top;
+}
+
+/* .iframe100 {   display: block;   border: none;   height: 300px;   width: 100%; }
 
 .trailer-wrap {
   display: flex;
   justify-content: center;
   align-items: center;  
-}
+} */
 
 /* react-multi-carousel Customize */
 
@@ -256,6 +309,10 @@ button:focus {
 }
 
 /* Bootstrap Customize */
+.profile p, .profile ul {
+  margin-bottom: 0;
+}
+
 @media (min-width: 1200px) and (max-width: 2009px) {
   .row-cols-xl-5>* {
       flex: 0 0 25%;
@@ -277,6 +334,13 @@ button:focus {
   }
 }
 
+@media (min-width: 576px) {
+  .modal-dialog {
+      max-width: 500px;
+      margin: 7rem auto;
+  }
+}
+
 .navbar {
   padding: 1rem 1rem;
   font-size: 1rem;
@@ -291,28 +355,29 @@ button:focus {
   border: none;
 }
 
+.card-wrap {
+  transition: all 0.25s ease-out;
+}
+
+.card-wrap:hover {
+  transform: scale(1.1);
+  z-index: 999;
+}
+
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   max-width: 50vw;  
-  max-height: 100vh;
   word-wrap: break-word;
   background-color: #121212;
-  background-clip: border-box;
-  border: 1px solid rgba(0,0,0,0.125);
+  background-clip: border-box;  
   border-radius: 0.25rem;
   margin: 0 auto;
-  cursor: pointer;
-  transition: all 0.25s ease-out;
+  cursor: pointer;  
 }
 
-.card:hover {  
-  /* box-shadow: 0 0 7px 3px rgba(255, 181, 3, 0.75); */
-  transform: scale(1.15);
-  z-index: 999;
-}
 
 .card-img, .card-img-top {
   border-top-left-radius: calc(0.25rem - 1px);
@@ -332,7 +397,7 @@ button:focus {
   color: #000;
   font-size: 1.65em;
   padding: 0;
-  margin-right: 2em;
+  padding-right: 2px;
 }
 
 @media (max-width: 414px) {
@@ -444,18 +509,42 @@ button:focus {
 
 /* MovieDetail Style */
 
-.creditsList, .recommendList {
+/* .carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  height: 300px;
+} */
+
+.recommendList {  
   display: inline-flex;
   flex-flow: wrap;
 }
 
-.creditsList {
+.creditsList-wrap {
+  width: 100vw;
+  display: inline-flex;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.creditsList-wrap li {
+  min-width: 130px;
   width: 8rem;
-  margin: 10px 10px 10px 0;
+}
+
+.creditsList-wrap li:not(:last-child) {
+  margin-right: 15px;
+}
+
+.creditsList:hover {
+  cursor: grab;
+  cursor: -webkit-grab;
 }
 
 .creditsList.active {
-  transition: 1s all ease-in-out;
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
 }
 
 .recommendList {
@@ -472,6 +561,16 @@ button:focus {
   font-size: 1.3rem;
   line-height: 2.4rem;
   color: white;
+}
+
+/* Person Profile */
+.gallery {
+  cursor: zoom-in;
+}
+
+.gallery-modal {
+  width: 100%;
+  cursor: zoom-out;
 }
 
 /* Button Custom Style */
@@ -506,7 +605,7 @@ button:focus {
 .moreBtn {
     position: absolute;
     top: 0;
-    right: 105px;
+    right: 15px;
 }
 
 .zIndex-100 {
@@ -521,4 +620,93 @@ button:focus {
 
 .MuiDrawer-paperAnchorLeft {
   background-color: #121212 !important;
+}
+
+/* Responsive Style */
+
+@media (max-width: 640px) {
+  .details h5, .card-body h5 {
+    font-size: 1.1rem;
+    line-height: 1.65rem;
+  }
+  .details p {
+    font-size: 1rem;
+    line-height: 1.85rem;
+  }
+  .display-4 {
+    font-size: 2rem;
+    line-height: 2.6rem;
+    margin-top: 10%;    
+  }
+  .display-5 {
+    font-size: 1.3rem;
+  }
+  .display-6 {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+  .display-6-reverse {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    font-weight: bold;
+    color: #121212;
+  }  
+  .card-body {
+    padding: 1rem;
+  }
+  .card-body p {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .toTop {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background-color: #ffb500;
+  }
+  .toTop:hover::after {
+    content: '';
+    top: 0;
+  }
+  .arrow {
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    animation: upTop 1s ease-out infinite;
+  }
+  .card-wrap:hover {
+    transform: none;
+  }
+  .card-img, .card-img-top {
+    min-width: 0;
+    min-height: 0;
+  }
+  .react-multi-carousel-item {
+    transform: translateX(-50%);
+  }
+  .backBtn {
+    font-size: 1.1rem;
+    vertical-align: middle;
+    margin-left: 2%;
+  }
+  .only-desk {
+    display: none;
+  }  
+  .creditsList-wrap li {
+    width: 120px;
+  }
+}
+
+@media (max-width: 414px){
+  .card-img-top {
+    max-height: 282px;
+  }
+  .modal-dialog {
+    padding: 1.3rem;
+  }
+}
+
+@media (max-width: 1366px) {
+  .creditsList-wrap {
+    overflow-x: scroll;
+  }
 }

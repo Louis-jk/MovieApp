@@ -87,16 +87,16 @@ function Popular({language, region, category}) {
 
     return (
         <div className="container-fluid px-lg-5">
-            <h5 className="mt-5 border-left pl-3 mb-2">인기영화</h5>            
+            <h5 className="mt-5 mb-4 mb-lg-0 border-left pl-3 mb-2">인기영화</h5>            
             <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">                
                 {
                 movies.map((movie, index) => 
                     (movies.length === index + 1) ?                        
-                        <div ref={lastMovieElementRef} key={movie.id}>
+                        <div ref={lastMovieElementRef} key={movie.id} className="card-wrap">
                             <MovieList likedMovies={likedMovies} movie={movie} genres={genres} genresList={genresList} imgPath={imgPath} onSetLike={onSetLike} />
                         </div>
                         :
-                        <div key={movie.id}>
+                        <div key={movie.id} className="card-wrap">
                             <MovieList likedMovies={likedMovies} movie={movie} genres={genres} genresList={genresList} imgPath={imgPath} onSetLike={onSetLike} />
                         </div>
                     )}

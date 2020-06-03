@@ -47,16 +47,16 @@ function Liked({language, region, category}) {
     return (
         <div className="container-fluid px-lg-5">
             
-            <h5 className="mt-5 border-left pl-3 mb-2">찜한영화</h5>
+            <h5 className="mt-5 mb-4 mb-lg-0 border-left pl-3 mb-2">찜한영화</h5>
             
             <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
             
                 {
                 movies.map(movie => 
-                    <div key={movie.id}>
+                    <div key={movie.id} className="card-wrap">
                         <div className="card mb-4 mb-lg-5 mt-lg-5 mx-2">
-                        <Link to={`/details/${movie.id}`}><img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w780${movie.poster_path}` : "noimg.jpg"} alt={movie.title} title={movie.title} /></Link>
-                            <div className="card-body px-0 px-md-3">
+                        <Link to={`/details/${movie.id}`}><img className="card-img-top" src={(movie.poster_path)? `${imgPath}/w500${movie.poster_path}` : "noimg.jpg"} alt={movie.title} title={movie.title} /></Link>
+                            <div className="card-body px-2 px-md-3">
                                 <h5 className="card-title">{movie.title}</h5>
                                 <p className="card-text">평점 : {movie.vote_average} / 10</p>
                                 {/* <p>장르 : {movie.genres.map(genre => genre.name).join(', ')}</p> */}

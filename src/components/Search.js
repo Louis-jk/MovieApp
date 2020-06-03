@@ -68,11 +68,11 @@ function Search() {
                     {                
                     movies.map((movie, index) => 
                         (movies.length === index + 1) ?
-                        <div ref={lastMovieElementRef} key={movie.id}>
+                        <div ref={lastMovieElementRef} key={movie.id} className="card-wrap">
                             <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
                         </div>
                         :                    
-                        <div key={movie.id}>
+                        <div key={movie.id} className="card-wrap">
                             <MovieList likedMovies={likedMovies} movie={movie} imgPath={imgPath} onSetLike={onSetLike} />
                         </div>
                         )}
