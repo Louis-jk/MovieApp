@@ -10,6 +10,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from 'react-router-dom'
 import MovieList from './MovieList'
+import { Modal, Button } from 'react-bootstrap';
 
 const responsive = {
     desktop: {
@@ -90,6 +91,16 @@ function PersonProfile({history, match}) {
         }
     }
 
+    const [show, setShow] = useState(false);
+    const [imgUri, setImgUri] = useState(null)
+
+    const handleClose = () => setShow(false);
+    const handleShow = (e) => {  
+        console.log(e)
+        setImgUri(e.target.alt)      
+        setShow(true);
+    }
+
     if (loading) return <Loading />
     if (error) return <div>에러 발생</div>
     if (!castMovies) return <div>추천영화가 없습니다.</div>
@@ -98,24 +109,27 @@ function PersonProfile({history, match}) {
 
     return (
         <>
+        <Modal show={show} onHide={handleClose}>
+            <img className="gallery-modal" src={`https://image.tmdb.org/t/p/w780/${imgUri}`} alt={imgUri} onClick={handleClose}/>
+        </Modal>
         <Nav />
         <div className="container-fluid">
-            <div className="mt-5">
-                <Link href="#" onClick={history.goBack} style={{"fontSize": 1.3+"rem", "color": "#fff","verticalAlign": "center"}}><i className="fa fa-arrow-left" aria-hidden="true" style={{"marginRight": 10 + "px", "marginLeft": 30 + "px"}}></i>뒤로가기</Link>
+            <div className="mt-4 mt-lg-5 mb-4 mb-md-0">
+                <Link href="#" onClick={history.goBack} className="backBtn"><i className="fa fa-arrow-left backIcon" aria-hidden="true"></i>뒤로가기</Link>
             </div>
 
-            <div className="row py-md-5">
-                <div className="col-md-4 col-xl-3 px-5 pl-md-5">
+            <div className="row pt-md-5">
+                <div className="col-md-4 col-xl-3 px-4 pl-md-5">
                     {
                         (!person.profile_path) ? <img src="../noimg.jpg" alt="" /> :
                         <img className="img-fluid rounded" src={`${imgPath}/w500${person.profile_path}`} title={person.name} alt={person.name} />
                     }
                 </div>
                 <div className="col-md-8 mx-xl-auto col-xl-8 details pr-md-5">
-                    <h3 className="display-4 mb-5">{ person.name ? person.name : "정보가 없습니다."}</h3>
-                    <div className="row col-12">
-                        <div className="col-12 col-lg-4">
-                            <h4 className="display-5 mb-3">잘 알려진 이름</h4>
+                    <h3 className="display-4 col-12 mb-5">{ person.name ? person.name : "정보가 없습니다."}</h3>
+                    <div className="row col-12 profile">
+                        <div className="col-12 col-lg-4 mb-5">
+                            <h4 className="display-5 mb-2">잘 알려진 이름</h4>
                             <ul>
                                 {
                                     person.also_known_as.length === 0 ? <li><p>알려진 이름의 정보가 없습니다.</p></li> :
@@ -124,19 +138,19 @@ function PersonProfile({history, match}) {
                                 }
                             </ul>
                         </div>
-                        <div className="col-12 col-lg-4">
-                            <h4 className="display-5">생년월일</h4>
+                        <div className="col-12 col-lg-4 mb-5">
+                            <h4 className="display-5 mb-2">생년월일</h4>
                             <p>{ person.birthday ? person.birthday : "정보가 없습니다."}</p>
                         </div>
-                        <div className="col-12 col-lg-4">
-                            <h4 className="display-5">태어난곳</h4>
+                        <div className="col-12 col-lg-4 mb-5">
+                            <h4 className="display-5 mb-2">태어난곳</h4>
                             <p>{ person.place_of_birth ? person.place_of_birth : "정보가 없습니다." }</p> 
                         </div>      
                     </div>                                 
                 </div>
 
                 <div className="col-12 my-5 px-md-5">       
-                    <h3 className="col-12 mt-5">갤러리</h3>
+                    <h3 className="display-6 col-12 mt-5">갤러리</h3>
                     <Carousel 
                         responsive={responsive} 
                         infinite={true} 
@@ -151,13 +165,13 @@ function PersonProfile({history, match}) {
                     >
                         {   
                             !images ? <img src="../noimg.jpg" alt="" />  :                     
-                            images.map((img,index) => <div key={index}><img src={`${imgPath}/w185${img.file_path}`} alt={img.file_path} /></div>)
+                            images.map((img,index) => <div key={index}><img className="gallery" src={`${imgPath}/w185${img.file_path}`} alt={img.file_path} onClick={handleShow} /></div>)
                         }
                     </Carousel>
                 </div>
 
                 <div className="mt-5 col-12 px-md-5">
-                    <h3 className="sub_title">{ person.name ? person.name : "정보가 없습니다."} 의 출연 영화</h3>
+                    <h3 className="sub_title display-6">{ person.name ? person.name : "정보가 없습니다."} 의 출연 영화</h3>
                     
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">
                         {   !castMovies ? <p className="block mx-3">출연한 영화가 없습니다.</p> :
@@ -168,7 +182,7 @@ function PersonProfile({history, match}) {
                 </div>
 
                 <div className="mt-5 col-12 crew_bg">
-                    <h3 className="sub_title pt-5 px-md-5">{ person.name ? person.name : "정보가 없습니다."} 의 제작 참여 영화</h3>
+                    <h3 className="sub_title pt-5 px-md-5 display-6-reverse">{ person.name ? person.name : "정보가 없습니다."} 의<br />제작 참여 영화</h3>
                     
                     <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5 px-md-5">
                         {   
