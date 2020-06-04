@@ -61,7 +61,7 @@ export default function WatchList({url, api_key, imgPath, watchList, likedMovies
     if (movies.length === 0) return <div className="info-msg"><p>최근 본 영화가 없습니다.</p></div>
 
     return (
-        <div className="container-fluid px-lg-5">
+        <div className="container-fluid px-lg-5 content">
             <h5 className="mt-5 mb-4 mb-lg-0 border-left pl-3 mb-2">최근 본 영화</h5>            
             <div className="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-5">                
                 {

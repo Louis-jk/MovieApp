@@ -13,25 +13,28 @@ export default function useMovieSearch(url, api_key, query, language, pageNumber
     }, [query])
  
     useEffect(() => {     
+
+            setLoading(false)
+            setError(false)
             
             let cancel
             
             Axios({
                 method: 'GET',
                 url: `${url}/search/movie?api_key=${api_key}&language=${language}&query=${query}&page=${pageNumber}`,
-                cancelToken: new Axios.CancelToken(c => cancel = c)
-    
+                cancelToken: new Axios.CancelToken(c => cancel = c)    
             }).then(res => {       
                 setMovies(prevMovies => {
                     return [...new Set([...prevMovies, ...res.data.results])]
                 })                
                 setHasMore(res.data.results.length > 0)
-                setLoading(false)    
+                setLoading(false)
             }).catch(e => {
                 if (Axios.isCancel(e))
                 setError(true)
             })
             return () => cancel()
+
         },[url, api_key, language, query, pageNumber])
 
     return { loading, error, movies, hasMore }

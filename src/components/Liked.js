@@ -45,7 +45,7 @@ function Liked({language, region, category}) {
    
     
     return (
-        <div className="container-fluid px-lg-5">
+        <div className="container-fluid px-lg-5 content">
             
             <h5 className="mt-5 mb-4 mb-lg-0 border-left pl-3 mb-2">찜한영화</h5>
             

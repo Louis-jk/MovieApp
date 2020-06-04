@@ -113,7 +113,7 @@ function PersonProfile({history, match}) {
             <img className="gallery-modal" src={`https://image.tmdb.org/t/p/w780/${imgUri}`} alt={imgUri} onClick={handleClose}/>
         </Modal>
         <Nav />
-        <div className="container-fluid">
+        <div className="container-fluid content">
             <div className="mt-4 mt-lg-5 mb-4 mb-md-0">
                 <Link href="#" onClick={history.goBack} className="backBtn"><i className="fa fa-arrow-left backIcon" aria-hidden="true"></i>뒤로가기</Link>
             </div>

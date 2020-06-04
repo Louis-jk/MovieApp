@@ -32,6 +32,10 @@ a:hover {
   color: #ffb500;
 }
 
+.content {
+  padding-top: 5rem;
+}
+
 .display-4 {
   font-size: 3.5rem;
   font-weight: 500;
@@ -217,7 +221,8 @@ input:-webkit-autofill:active  {
 }
 
 .liked:hover {
-  border: 2px solid #ffb500 !important;
+  color: #000;
+  background-color: #ffb500;
 }
 
 .done {
@@ -225,9 +230,9 @@ input:-webkit-autofill:active  {
   color: #000;
 }
 
-.done:hover {
+/* .done:hover {
   color: #fff;
-}
+} */
 
 .crew_bg {
   background: #ffb500;
@@ -342,8 +347,13 @@ button:focus {
 }
 
 .navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
   padding: 1rem 1rem;
   font-size: 1rem;
+  z-index: 100;
+  transition: all 0.3s ease-out;
 }
 
 .navbar-brand {
@@ -361,7 +371,7 @@ button:focus {
 
 .card-wrap:hover {
   transform: scale(1.1);
-  z-index: 999;
+  z-index: 2;
 }
 
 .card {
@@ -398,12 +408,6 @@ button:focus {
   font-size: 1.65em;
   padding: 0;
   padding-right: 2px;
-}
-
-@media (max-width: 414px) {
-  .navbar-dark .navbar-brand {
-    font-size: 1em;
-  }
 }
 
 .navbar-brand:hover {
@@ -674,7 +678,7 @@ button:focus {
     animation: upTop 1s ease-out infinite;
   }
   .card-wrap:hover {
-    transform: none;
+    transform: scale(1);
   }
   .card-img, .card-img-top {
     min-width: 0;
@@ -702,6 +706,9 @@ button:focus {
   }
   .modal-dialog {
     padding: 1.3rem;
+  }
+  .navbar-dark .navbar-brand {
+    font-size: 1em;
   }
 }
 

@@ -54,7 +54,7 @@ function Search() {
     return (
         <>
             <Nav />
-            <div className="container-fluid px-lg-5">
+            <div className="container-fluid px-lg-5 content">
                 <div className="d-flex justify-content-center">
                     <div className="search-form">
                         <input type="text" name="search" value={query} onChange={handleSearch} placeholder="영화제목을 검색해보세요." autoComplete="off" />

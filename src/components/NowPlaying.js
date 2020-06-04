@@ -78,7 +78,7 @@ function NowPlaying({language, region, category}) {
     if (!movies) return <div>개봉할 영화가 없습니다.</div>
     
     return (
-        <div className="container-fluid px-lg-5">
+        <div className="container-fluid px-lg-5 content">
             
             <h5 className="mt-5 mb-4 mb-lg-0 border-left pl-3 mb-2">현재 상영중인 영화</h5>
 

@@ -9,7 +9,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useDispatch } from 'react-redux'
 import { setWatchList } from '../modules/movieAPI'
-import { findDOMNode } from 'react-dom'
 
 const responsive = {
     desktop: {
@@ -43,8 +42,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     const [ crewVisible, setCrewVisible ] = useState(8)
     const [ btnMsg01, setBtnMsg01 ] = useState(false)
     const [ btnMsg02, setBtnMsg02 ] = useState(false)
-
-    const slide = useRef()
+    
     const track = useRef()
 
     useEffect(() => {        
@@ -178,13 +176,17 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
         track.current.scrollLeft = scrollLeft - walk        
     }
 
+       
+       
+
     
     return (
-        <div className="container-fluid">
+        <div className="container-fluid content">
             <div className="mt-4 mt-md-5 mb-4 mb-md-0">
                 <Link to="#" onClick={history.goBack} className="backBtn"><i className="fa fa-arrow-left backIcon" aria-hidden="true"></i>뒤로가기</Link>
             </div>
             <div style={ backgroundImage }></div>
+
             <div className="row px-md-5 py-md-5">
                 <div className="row mb-3">
                     <div className="col-md-12 col-lg-5 col-xl-3 mx-3 mx-md-0 ml-xl-3 mb-md-5">

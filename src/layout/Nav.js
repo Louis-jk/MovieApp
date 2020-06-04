@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import '../App.css'
 
 function Nav() {
-   
+
+    const navbar = useRef()
+
+    let prevScrollpos = window.pageYOffset;
+    
+    const scrollEvent = () => {        
+        let currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            navbar.current.style.top = 0;
+        } else {
+            navbar.current.style.top = -5+"rem";
+        }
+        prevScrollpos = currentScrollPos;
+        console.log(navbar.current.style.top)
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', scrollEvent)
+        return () => {
+            window.removeEventListener('scroll', scrollEvent)
+        }
+    }, [navbar])
 
     return (
         <>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand">theMovies</a>
+        <nav ref={navbar} className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <h1 className="navbar-brand">theMovies</h1>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseExample" aria-controls="collapseExample" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
