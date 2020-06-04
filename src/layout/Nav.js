@@ -16,7 +16,6 @@ function Nav() {
             navbar.current.style.top = -5+"rem";
         }
         prevScrollpos = currentScrollPos;
-        console.log(navbar.current.style.top)
     }
 
     useEffect(() => {
@@ -24,7 +23,7 @@ function Nav() {
         return () => {
             window.removeEventListener('scroll', scrollEvent)
         }
-    }, [navbar])
+    }, )
 
     return (
         <>
