@@ -106,39 +106,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
         setBtnMsg02(!btnMsg02)
     }
 
-    
- /*    let currentIdx = 0
-
-    const moveSlide = (num) => {     
-        let i = 0;
-        for (i = 0; i < slide.current.children.length; i++) {
-            slide.current.children.item(i).style.transform = `translateX(-${num*130}px)`                        
-        } 
-        currentIdx = num
-    }
-
-    const nextSlide = () => {
-        console.log(slide)
-        const slideCount = slide.current.children.length
-        if(currentIdx < slideCount - 1) {
-            moveSlide(currentIdx + 1)
-        } else {
-            moveSlide(0)
-        }
-        console.log(currentIdx)
-    }
-
-    const prevSlide = () => {
-        const slideCount = slide.current.children.length
-        if(currentIdx > 0) {
-            moveSlide(currentIdx - 1)
-        } else {
-            moveSlide(slideCount - 1)
-        }
-        console.log(currentIdx)
-    } */
-
-      
+          
     let isDown = false
     let startX
     let scrollLeft
@@ -169,15 +137,12 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
     
     const onMouseMove = (e) => {
         if(!isDown) return
-        // e.preventDefault()
+        e.preventDefault()
         const x = e.pageX - track.current.offsetLeft 
         const walk = x - startX
 
-        track.current.scrollLeft = scrollLeft - walk        
-    }
-
-       
-       
+        track.current.scrollLeft = scrollLeft - walk
+    }  
 
     
     return (
@@ -253,6 +218,7 @@ function MovieDetail ({ history, movie_id, api_key, url, imgPath, language, regi
                         {/* { credits.cast.length > 8 ? <button className="btn btn-primary float-right moreBtn" onClick={moreBtn01}>{!btnMsg01 ? '더보기' : '닫기'}</button> : null} */}
                             {              
                                 credits.cast.length === 0 ? <p className="row col-12 my-3">배우 정보가 없습니다.</p> :
+                                
                                 <div className="carousel mb-4 my-lg-3">
                                     <ul 
                                         ref={track} 
