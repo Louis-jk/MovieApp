@@ -12,8 +12,10 @@ function Nav() {
         let currentScrollPos = window.pageYOffset;
         if (prevScrollpos > currentScrollPos) {
             navbar.current.style.top = 0;
+            navbar.current.style.boxShadow = "none"
         } else {
             navbar.current.style.top = -5+"rem";
+            navbar.current.style.boxShadow = "0px 3px 10px #000"
         }
         prevScrollpos = currentScrollPos;
     }
