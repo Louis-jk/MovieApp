@@ -35,7 +35,10 @@ function Upcoming({language, region, category}) {
     }, [loading, hasMore])
 
    
-    useEffect(() => {       
+    useEffect(() => {   
+        
+        setLoading(true)
+        setError(false) 
         
         let cancel
 
