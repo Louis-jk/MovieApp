@@ -386,6 +386,7 @@ button:focus {
   border-radius: 0.25rem;
   margin: 0 auto;
   cursor: pointer;  
+  transition: all 0.3s ease;
 }
 
 
@@ -401,6 +402,9 @@ button:focus {
   object-position: center;
 }
 
+.card:hover {
+  color: #ffb500;
+}
 
 .navbar-dark .navbar-brand {
   font-family: 'Libre Barcode 39 Extended Text', cursive; 
