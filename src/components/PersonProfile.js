@@ -95,8 +95,7 @@ function PersonProfile({history, match}) {
     const [imgUri, setImgUri] = useState(null)
 
     const handleClose = () => setShow(false);
-    const handleShow = (e) => {  
-        console.log(e)
+    const handleShow = (e) => {
         setImgUri(e.target.alt)      
         setShow(true);
     }
