@@ -7,7 +7,8 @@
     height: 40px;
     text-align: center;
     font-size: 10px;
-    z-index: 99999;
+    z-index: 99999;  
+    overflow-y: hidden;  
   }
 
   .spinner_bg {
@@ -20,7 +21,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.7);
-    z-index: 1;
+    z-index: 1;    
   }
   
   .spinner > div {
@@ -28,8 +29,7 @@
     height: 100%;
     width: 6px;
     margin: 2px;
-    display: inline-block;
-    
+    display: inline-block;    
     -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
     animation: sk-stretchdelay 1.2s infinite ease-in-out;
   }

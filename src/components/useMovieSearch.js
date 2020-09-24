@@ -19,6 +19,7 @@ export default function useMovieSearch(url, api_key, query, language, pageNumber
             
             let cancel
             
+            if (query) {
             Axios({
                 method: 'GET',
                 url: `${url}/search/movie?api_key=${api_key}&language=${language}&query=${query}&page=${pageNumber}`,
@@ -34,6 +35,7 @@ export default function useMovieSearch(url, api_key, query, language, pageNumber
                 setError(true)
             })
             return () => cancel()
+        }
 
         },[url, api_key, language, query, pageNumber])
 

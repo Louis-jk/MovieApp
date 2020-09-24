@@ -85,6 +85,7 @@ a:hover {
   height: 100%;
   pointer-events: none;
   border-bottom: 1px solid #ffffff;
+  overflow: hidden;
 }
 
 .search-form label::after {
@@ -573,6 +574,9 @@ button:focus {
 
 /* Person Profile */
 .gallery {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
   cursor: zoom-in;
 }
 
