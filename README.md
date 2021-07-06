@@ -4,7 +4,7 @@
 영화 검색 및 영화 즐겨찾기 추가(찜하기 기능), 최근 본 영화(브라우저 상에서 영화 디테일을 확인한 영화를 담는) 기능을 더하여
 사이트 사용자에게 편의성을 더함.
 
-해당 경로로 이동은 여기 -> [보러가기](https://5eda602e40a67a000791f9dc--modest-dijkstra-b9b7c0.netlify.app/ '사이트 이동')
+[사이트 보러가기](https://5eda602e40a67a000791f9dc--modest-dijkstra-b9b7c0.netlify.app/ '사이트 이동')
 
 # Screenshots
 <img src="https://user-images.githubusercontent.com/25785760/83265658-c197c100-a1fc-11ea-8c24-1c7883b604f4.png" />
